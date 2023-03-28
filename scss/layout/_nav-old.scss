@@ -1,0 +1,153 @@
+/***********************************************************/
+/* BARRA DE NAV-BOOTSTRAP */
+/***********************************************************/
+.navbar {
+    // background-color: map-get($colors, "arena" );
+    background-color: #a3d2d9;
+    margin: 0 auto;
+    border: solid 1px black;
+
+    /* MENU CENTRADO (desplegado) */
+    .navbar-collapse {
+        text-align: center;
+    }
+}
+
+.navbar-nav{
+    margin: 0 auto;
+    width: max-content;
+    min-width: 250px;
+}
+
+.nav-item{
+    list-style: none;
+    // font-family: $font-p;
+    //padding-top: 7px;
+
+    // width: 50%;
+    height: min-content;
+text-align: middle;
+margin-top: 10px;
+margin-bottom: 10px;
+padding-top: 5px;
+// padding-bottom: 10px;
+// padding-left: 80px;
+// padding-right: 80px;
+background-color: white;
+// -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(255,139,253,0); 
+// box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(255,139,253,0);
+text-shadow: #FFF 0px 0px 5px, #FFF 0px 0px 10px, #FFF 0px 0px 15px, #FF2D95 0px 0px 20px, #FF2D95 0px 0px 30px, #FF2D95 0px 0px 40px, #FF2D95 0px 0px 50px, #FF2D95 0px 0px 75px;
+border: 3px double #FF4294;
+border-radius: 3px;
+color: #00004A;
+font-family: 'Luckiest Guy', cursive;
+font-size: 20px;
+border-radius: 10px;
+
+}
+
+.nav-link{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.active{
+    font-weight: bold;
+}
+
+/* MENU CENTRADO */
+.navbar-toggler{
+    margin: 0 auto;
+    border: none;
+    -webkit-animation: jello-horizontal 1s both;
+    animation: jello-horizontal 1s both;
+}
+
+// ANIMACION: Boton de Menú "JELLO"
+@-webkit-keyframes jello-horizontal {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+                transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+                transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+                transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+                transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+                transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes jello-horizontal {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+                transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+                transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+                transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+                transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+                transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+    }
+}
+
+/* REEMPLAZA ICONO DEL MENU */
+.navbar-toggler-icon {
+    // background-color: map-get($colors, "arena-text" );
+    // background-color: #a3d2d9;
+    // background-image: url(../img/logo-menu.png)!important;
+    background-image: url(../img/button-02.png)!important;
+    background-size: cover;
+    // height: 50px;
+    // width: 50px;
+    height: 55px;
+    width: 100px;
+    position: relative;
+    // transition: all 0.50s ease-out;
+    transition: all 0.10s ease-out;
+    transform-origin: center;
+    // border-radius: 50%;
+    // box-shadow: map-get($colors, "arena-text" ) 0px 3px 5px 3px;
+}
+
+.navbar-toggler:not(.collapsed) 
+.navbar-toggler-icon 
+{
+    // transform: rotateY(180deg);
+    background-image: url(../img/button-pressed-02.png)!important;
+}

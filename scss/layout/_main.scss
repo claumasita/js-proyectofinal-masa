@@ -1,0 +1,57 @@
+main{
+    max-width: 1300px;
+    height: 2500px;
+    margin: 0 auto;
+}
+
+.novedades{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    //background-color: pink;
+    background-color: rgba(216, 112, 147, 0.267);
+    border: solid 1px black;
+    border-top: none;
+    margin-top: 90px;
+}
+
+.titulo{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 60px;
+}
+
+.rect{
+    border: ridge 5px #6eb6c5;
+    width: 100%;
+    position: relative;
+    background-color: #a3d2d9;
+}
+
+.rect-1{
+    // position: relative;
+    height: 50px;
+    width: 25%;
+    border-right: none;
+    // border-left: none;
+}
+
+.rect-2{
+    // position: relative;
+    height: 60px;
+    width: 50%;
+}
+
+.rect-3{
+    position: relative;
+    height: 50px;
+    width: 25%;
+    border-left: none;
+    // border-right: none;
+}
+
+// .navbar{
+//     top:15px;
+//     right: 15px;
+// }
