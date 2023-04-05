@@ -13,44 +13,66 @@
 
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Luckiest+Guy|Orbitron|Russo+One|Shadows+Into+Light|Teko&display=swap" rel="stylesheet"> 
 
+    <!-- Hoja de Estilos NES-->
+    <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P">
     <!-- Hoja de Estilos-->
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <header class="container-fluid">
+    <!-- <header class="container-fluid">
         <div class="banner"></div>
+    </header> -->
 
-        <!-- <nav class="navbar fixed-top">
+        <!-- <nav class="navbar fixed-top"> -->
+        <nav class="navbar sticky-top">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#"></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                <div class="container-nav">
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <button class="navbar-toggler carrito"><span class="navbar-toggler-icon icon-cart"></span></button>
+                </div>
+                
+
               <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                   <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Pizza Art</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
+
                 <div class="offcanvas-body">
-                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                  <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nes-li">
+                        <a class="nes-btn is-primary nes-btn-a" href="./index.html">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Menú</a>
+                    <li class="nes-li">
+                        <a class="nes-btn nes-btn-a" href="#">Menú</a>
                     </li>
+                    <li class="nes-li">
+                        <a class="nes-btn nes-btn-a" href="#">Diseños</a>
+                      </li>
+                    <li class="nes-li">
+                        <a class="nes-btn nes-btn-a" href="#">Nosotros</a>
+                      </li>
                   </ul>
                 </div>
+
               </div>
             </div>
-          </nav> -->
+          </nav>
 
+          <header class="container-fluid">
+            <div class="banner"></div>
+        </header>
 
                   <!-- NAV FUERA DEL HEADER PARA QUE FUNCIONE CORRECTAMENTE EL STICKY -->
         <!-- <div class="container-fluid sticky-top"> -->
-        <div class="sticky-top">
+
+            <!-- <div class="sticky-top">
             <nav class="navbar navbar-expand-xs">
                 <div class="container-fluid">
+                    <div class="container-nav">
                     <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -58,38 +80,45 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                         <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Menú</a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Transporte</a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a>
-                        </li>
-                    </ul>
+                            <li class="nes-li">
+                                <a class="nes-btn is-success nes-btn-a" href="./index.html">Inicio</a>
+                            </li>
+                            <li class="nes-li">
+                                <a class="nes-btn is-primary nes-btn-a" href="#menu">Menú</a>
+                            </li>
+                            <li class="nes-li">
+                                <a class="nes-btn nes-btn-a" href="#">Nosotros</a>
+                            </li>
+                            <li class="nes-li">
+                                <a class="nes-btn is-warning nes-btn-a" href="#">Contacto</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
             </nav>
-        </div>
+        </div> -->
 
-    </header>
-
-
+    <!-- </header> -->
 
     <main class="container-fluid">
         <section class="novedades">
-            <div class="titulo">
-                <div class="rect rect-1"></div>
+            <!-- <div class="titulo"> -->
+                <!-- <div class="rect rect-1"></div>
                 <div class="rect rect-2"></div>
-                <div class="rect rect-3"></div>
+                <div class="rect rect-3"></div> -->
+            <!-- </div> -->
+
+            <div class="nes-container with-title home" id="home">
+                <p class="title">Novedades</p>
+                <p>Llegaron los nuevos diseños para tus cajas <strong>Pizza Art!</strong></p>
             </div>
+
+            <div class="nes-container with-title home" id="menu">
+                <p class="title">Nuestro Menú</p>
+                <p>Además de nuestras exclusivas cajas <strong>Pizza Art</strong> tenemos las más <strong>ricas opciones en pizzas.</strong></p>
+            </div>
+
         </section>
     </main>
     <footer></footer>

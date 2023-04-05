@@ -2,18 +2,42 @@ main{
     max-width: 1300px;
     height: 2500px;
     margin: 0 auto;
+    margin-top: -8px;
 }
 
 .novedades{
     position: relative;
+    display: flexbox;
+    justify-content: center;
     height: 100%;
     width: 100%;
     //background-color: pink;
-    background-color: rgba(216, 112, 147, 0.267);
-    border: solid 1px black;
+    //background-color: rgba(216, 112, 147, 0.267);
+    background-color: #fef3db;
+    border: solid 2px black;
     border-top: none;
-    margin-top: 90px;
+    // margin-top: 83px;
+    padding-top: 5px;
 }
+
+.home{
+    position: relative;
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.nes-container{
+    background-color: white;
+}
+
+.nes-container.with-title > .title {
+    //  padding: 0 0.5rem;
+    // margin: -1.8rem 0 1rem;
+    font-size: 1.2rem;
+  }
+
 
 .titulo{
     display: flex;
