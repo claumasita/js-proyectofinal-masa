@@ -1,8 +1,9 @@
 main{
     max-width: 1300px;
-    height: 2500px;
+    // height: 2500px;
     margin: 0 auto;
     margin-top: -8px;
+    padding-bottom: 15px;
 }
 
 .novedades{
@@ -18,12 +19,13 @@ main{
     border-top: none;
     // margin-top: 83px;
     padding-top: 5px;
+    padding-bottom: 20px;
 }
 
 .home{
     position: relative;
     width: 90%;
-    height: 500px;
+    min-height: 300px;
     margin: 0 auto;
     margin-top: 25px;
 }
@@ -36,7 +38,7 @@ main{
     //  padding: 0 0.5rem;
     // margin: -1.8rem 0 1rem;
     font-size: 1.2rem;
-  }
+}
 
 
 .titulo{
@@ -46,36 +48,29 @@ main{
     height: 60px;
 }
 
-.rect{
-    border: ridge 5px #6eb6c5;
-    width: 100%;
-    position: relative;
-    background-color: #a3d2d9;
-}
+#nuevas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-.rect-1{
-    // position: relative;
-    height: 50px;
-    width: 25%;
-    border-right: none;
-    // border-left: none;
-}
+    .card-nuevas{
+        padding-bottom: 25px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
 
-.rect-2{
-    // position: relative;
-    height: 60px;
-    width: 50%;
-}
+        .caja{
+            margin: 0 auto;
+            height: 220px;
+            width: 220px;
+            // background-image: url("../img/caja-copa.png");
+            background-size: cover;
+            background-position: center;
+        }
 
-.rect-3{
-    position: relative;
-    height: 50px;
-    width: 25%;
-    border-left: none;
-    // border-right: none;
+        button{
+            width: 160px;
+            margin: 0 auto;
+        }
+    }
 }
-
-// .navbar{
-//     top:15px;
-//     right: 15px;
-// }
