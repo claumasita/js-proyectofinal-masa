@@ -35,21 +35,21 @@ const cargaInicial=()=>{
 
 // Agrega los objetos de los nuevos diseños al Array correspondiente
 const cargaProductos=()=>{
-    agregarCaja(1,  "Caja Copa del Mundo", "caja-copa.png");
-    agregarCaja(2,  "Caja Dibu Final"    , "caja-dibu.png");
-    agregarCaja(3,  "Caja Messi"         , "caja-messi-01.png");
-    agregarCaja(4,  "Caja Messi Campeon" , "caja-messi-02.png");
-    agregarCaja(5,  "Caja Bomberman"     , "caja-bomberman.png");
-    agregarCaja(6,  "Caja Bowser"        , "caja-bowser.png");
-    agregarCaja(7,  "Caja Ghost Busters" , "caja-busters.png");
-    agregarCaja(8,  "Caja Ghost"         , "caja-ghost.png");
-    agregarCaja(9,  "Caja Donkey Kong"   , "caja-kong.png");
-    agregarCaja(10, "Caja Link"          , "caja-link.png");
-    agregarCaja(11, "Caja Super Mario"   , "caja-mario.png");
-    agregarCaja(12, "Caja Peach"         , "caja-peach.png");
-    agregarCaja(13, "Caja Perro"         , "caja-perro.png");
-    agregarCaja(14, "Caja Sonic"         , "caja-sonic.png");
-    agregarCaja(15, "Caja Spider-man"    , "caja-spiderman.png");
+    agregarCaja(1,  "Copa del Mundo", "caja-copa.png");
+    agregarCaja(2,  "Dibu Final"    , "caja-dibu.png");
+    agregarCaja(3,  "Messi"         , "caja-messi-01.png");
+    agregarCaja(4,  "Messi Campeon" , "caja-messi-02.png");
+    agregarCaja(5,  "Bomberman"     , "caja-bomberman.png");
+    agregarCaja(6,  "Bowser"        , "caja-bowser.png");
+    agregarCaja(7,  "GhostBusters"  , "caja-busters.png");
+    agregarCaja(8,  "Ghost"         , "caja-ghost.png");
+    agregarCaja(9,  "Donkey Kong"   , "caja-kong.png");
+    agregarCaja(10, "Link"          , "caja-link.png");
+    agregarCaja(11, "Super Mario"   , "caja-mario.png");
+    agregarCaja(12, "Peach"         , "caja-peach.png");
+    agregarCaja(13, "Perro"         , "caja-perro.png");
+    agregarCaja(14, "Sonic"         , "caja-sonic.png");
+    agregarCaja(15, "Spider-man"    , "caja-spiderman.png");
 }
 
 // Agrega los nuevos diseños al Contenedor correspondiente en INDEX.HTML
@@ -69,35 +69,37 @@ const agregarCardsProductos=(caja)=>{
     cardCaja.className = "container-fluid card-cajas";
     cardCaja.innerHTML = `
                             <div class="caja" style="background-image: url('../img/${caja.imagen}')"></div>
+                            <div class="nes-container is-centered cajaDescrip">${caja.descrip}</div>
                             `;
     divProductos.append(cardCaja);
 }
 
-// Obtiene el nombre de la página actual
-const pageName=()=>{
-    var rutaAbsoluta = self.location.href;   
-    var posicionUltimaBarra = rutaAbsoluta.lastIndexOf("/");
-    var rutaRelativa = rutaAbsoluta.substring( posicionUltimaBarra + "/".length , rutaAbsoluta.length );
-    return rutaRelativa;  
+// Verifica si el ID enviado por parámetro existe en la página actual
+const verificarPagina=(idDiv)=>{
+    const page = document.getElementById(idDiv);
+    console.log(page);
+    return(page ?? false);
 }
 
 //////////////////////////////////////////////////////////////
 //                   INICIO DEL PROGRAMA                    //
 //////////////////////////////////////////////////////////////
-let pagina = pageName();
+let idTag;
 
-switch(pagina.toLocaleLowerCase()){
-    case "index.html":
-        cargaInicial();
-        nuevasCajas.forEach((nuevaCaja)=>{
-            agregarCardsNuevas(nuevaCaja);
-        });
-        break;
+// INDEX
+idTag = "nuevas";
+if (verificarPagina(idTag) != false){
+    cargaInicial();
+    nuevasCajas.forEach((nuevaCaja)=>{
+        agregarCardsNuevas(nuevaCaja);
+    });
+}
 
-    case "productos.html":
-        cargaProductos();
-        cajas.forEach((caja)=>{
-            agregarCardsProductos(caja);
-        });
-        break;
+// PRODUCTOS
+idTag = "productos";
+if (verificarPagina(idTag) != false){
+    cargaProductos();
+    cajas.forEach((caja)=>{
+        agregarCardsProductos(caja);
+    });
 }

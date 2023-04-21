@@ -108,6 +108,8 @@ main {
       width: 220px;
       background-size: cover;
       background-position: center; }
+    #nuevas .card-cajas .cajaDescrip, #productos .card-cajas .cajaDescrip {
+      margin-bottom: 15px; }
     #nuevas .card-cajas .nes-btn, #productos .card-cajas .nes-btn {
       width: 160px;
       margin: 0 auto; }
