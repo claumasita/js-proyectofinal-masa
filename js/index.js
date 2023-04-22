@@ -165,7 +165,6 @@ if (verificarPagina(idTag) != false){
     cargaPizzas();
     const pizzasC = pizzas.filter((pz)=> pz.tipo == "c" );
     pizzasC.forEach((pizza)=>{
-        // agregarCardsClasicas(pizza);
         agregarCardsPizzas(pizza, divClasicas);
     });
 }
@@ -175,7 +174,6 @@ idTag = "especiales";
 if (verificarPagina(idTag) != false){
     const pizzasS = pizzas.filter((pz)=> pz.tipo == "s" );
     pizzasS.forEach((pizza)=>{
-        // agregarCardsClasicas(pizza);
         agregarCardsPizzas(pizza, divEspeciales);
     });
 }
@@ -185,7 +183,6 @@ idTag = "exclusivas";
 if (verificarPagina(idTag) != false){
     const pizzasX = pizzas.filter((pz)=> pz.tipo == "x" );
     pizzasX.forEach((pizza)=>{
-        // agregarCardsClasicas(pizza);
         agregarCardsPizzas(pizza, divExclusivas);
     });
 }
