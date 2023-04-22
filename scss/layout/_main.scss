@@ -33,7 +33,7 @@ main{
     }
 }
 
-#nuevas, #productos{
+#nuevas, #productos, #clasicas, #especiales, #exclusivas{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -43,6 +43,7 @@ main{
         width: 300px;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .caja{
             margin: 0 auto;
@@ -52,8 +53,33 @@ main{
             background-position: center;
         }
 
-        .cajaDescrip{
+        .cajaDescrip, .pizzaNombre{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 15px;
+            width: 250px;
+            height: 75px;
+            background-color: #fef3db;
+        }
+
+        .pizzaNombre{
+            color: white;
+            text-align: center;
+            margin-bottom: 0px;
+            background-color:black;
+        }
+
+        .pizzaCh{
+            padding-top: 10px;
+            text-align: center;
+            width: 250px;
+            background-color: #fef3db;
+        }
+        .pizzaGr{
+            text-align: center;
+            width: 250px;
+            background-color: #fef3db;
         }
 
         .nes-btn{
@@ -61,4 +87,81 @@ main{
             margin: 0 auto;
         }
     }
+
+    .card-pizza{
+        background-color: #fef3db;
+        margin-bottom: 20px;
+
+        .nes-btn{
+            margin-top: 15px;
+        }
+
+    }
+}
+
+#clasicas, #especiales, #exclusivas{
+    margin-top: 30px;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/// 
+///  
+/* Fondo modal: negro con opacidad al 50% */
+.modal {
+    display: none;      // Por defecto, estará oculto
+    position: fixed;    // Posición fija
+    z-index: 1;         // Se situará por encima de otros elementos de la página
+    padding-top: 200px; // El contenido estará situado a 200px de la parte superior
+    width: 100%;        // Ancho completo
+    height: 100%;       // Altura completa
+    overflow: auto;     // Se activará el scroll si es necesario
+    background-color: rgba(0,0,0,0.5); // Color negro con opacidad del 50%
+
+    .titulo-agregar{
+        background-color: black;
+    }
+
+    .agregar-cancelar{
+        display: flex;
+        flex-direction: column;
+
+        .btn-agregar{
+            margin-top: 10px;
+            width: 200px;
+        }
+        .btn-cerrar{
+            margin-top: 10px;
+            width: 200px;
+        }
+    }
+
+}
+
+  /* Ventana o caja modal */
+.modal-content {
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    border-radius: 0px;
+    position: relative;
+    background-color: white;
+    margin: auto;
+    padding: 5px;
+    max-width: 1300px;
+    width: 95%;
+    -webkit-animation-name: animarsuperior;
+    -webkit-animation-duration: 0.5s;
+    animation-name: animarsuperior;
+    animation-duration: 0.5s
+}
+
+// ANIMACION
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animarsuperior {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
 }

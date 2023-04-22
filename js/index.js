@@ -7,10 +7,25 @@ class Caja{
     }
 }
 
-const nuevasCajas  = []; // Array con los nuevos diseños (Novedades)
-const cajas        = []; // Array con los nuevos diseños (Novedades)
-const divNuevas    = document.querySelector("#nuevas");
-const divProductos = document.querySelector("#productos");
+// Clase para las pizzas disponibles
+class Pizza{
+    constructor(codigo, nombre, precioCh, precioGr, tipo){
+        this.codigo    = codigo;
+        this.nombre    = nombre;
+        this.precioCh  = precioCh;
+        this.precioGr  = precioGr;
+        this.tipo      = tipo;
+    }
+}
+
+const nuevasCajas    = []; // Array con los nuevos diseños (Novedades)
+const cajas          = []; // Array con todos los nuevos diseños
+const pizzas         = []; // Array con las pizzas
+const divNuevas      = document.querySelector("#nuevas");
+const divProductos   = document.querySelector("#productos");
+const divClasicas    = document.querySelector("#clasicas");
+const divEspeciales  = document.querySelector("#especiales");
+const divExclusivas  = document.querySelector("#exclusivas");
 
 //////////////////////////////////////////////////////////////
 //                        FUNCIONES                         //
@@ -23,6 +38,10 @@ const agregarNuevaCaja =(codigo, descrip, imagen)=>{
 
 const agregarCaja =(codigo, descrip, imagen)=>{
     cajas.push(new Caja(parseInt(codigo), descrip, imagen));
+}
+
+const agregarPizza =(codigo, nombre, precioCh, precioGr, tipo)=>{
+    pizzas.push(new Pizza(parseInt(codigo), nombre, parseFloat(precioCh), parseFloat(precioGr), tipo));
 }
 
 // Agrega los objetos de los nuevos diseños al Array correspondiente
@@ -50,6 +69,29 @@ const cargaProductos=()=>{
     agregarCaja(13, "Perro"         , "caja-perro.png");
     agregarCaja(14, "Sonic"         , "caja-sonic.png");
     agregarCaja(15, "Spider-man"    , "caja-spiderman.png");
+    agregarCaja(16, "Castlevania"   , "caja-simon.png");
+}
+
+// Agrega los objetos de las pizzas al Array correspondiente
+const cargaPizzas=()=>{
+    // Clasicas (c)
+    agregarPizza(1,  "muzzarella"                 , "2500" , "2900" , "c");
+    agregarPizza(2,  "jamon y morrones"           , "2900" , "3800" , "c");
+    agregarPizza(3,  "napolitana"                 , "3400" , "4200" , "c");
+    agregarPizza(4,  "fugazzeta con jamon"        , "4300" , "5000" , "c");
+
+    // Especiales (s)
+    agregarPizza(5,  "palmtios"                   , "3600" , "4300" , "s");
+    agregarPizza(6,  "calabresa"                  , "3800" , "4600" , "s");
+    agregarPizza(7,  "cuatro quesos"              , "3800" , "4600" , "s");
+    agregarPizza(8,  "provolone"                  , "3700" , "4500" , "s");
+
+    // Exclusivas (x)
+    agregarPizza(9,  "donkey kong (con banana)"   , "3800" , "4600" , "x");
+    agregarPizza(10, "tetris (cuadrada)"          , "2600" , "3000" , "x");
+    agregarPizza(11, "sonic (aros de cebolla)"    , "3600" , "4300" , "x");
+    agregarPizza(12, "bomberman"                  , "3700" , "4500" , "x");
+    agregarPizza(13, "super mario (champignones)" , "3900" , "4800" , "x");
 }
 
 // Agrega los nuevos diseños al Contenedor correspondiente en INDEX.HTML
@@ -58,7 +100,7 @@ const agregarCardsNuevas=(cajaNueva)=>{
     cardNueva.className = "container-fluid card-cajas";
     cardNueva.innerHTML = `
                             <div class="caja" style="background-image: url('./img/${cajaNueva.imagen}')"></div>
-                            <a class="nes-btn is-warning" href="./pages/productos.html">Ver todos</a>
+                            <a class="nes-btn is-warning" href="./pages/productos.html">ver todos</a>
                             `;
     divNuevas.append(cardNueva);
 }
@@ -69,9 +111,22 @@ const agregarCardsProductos=(caja)=>{
     cardCaja.className = "container-fluid card-cajas";
     cardCaja.innerHTML = `
                             <div class="caja" style="background-image: url('../img/${caja.imagen}')"></div>
-                            <div class="nes-container is-centered cajaDescrip">${caja.descrip}</div>
+                            <div class="nes-container is-centered is-rounded cajaDescrip">${caja.descrip}</div>
                             `;
     divProductos.append(cardCaja);
+}
+
+// Agrega todos los diseños al Contenedor correspondiente en MENU.HTML
+const agregarCardsPizzas=(pizza, contenedor)=>{
+    const cardPizza = document.createElement("div");
+    cardPizza.className = "container-fluid card-cajas card-pizza";
+    cardPizza.innerHTML = `
+                            <div class="pizzaNombre">${pizza.nombre}</div>
+                            <div class="pizzaCh">ch $${pizza.precioCh}</div>
+                            <div class="pizzaGr">gr $${pizza.precioGr}</div>
+                            <button class="nes-btn is-success btn-pizza" id="${pizza.codigo}">agregar</button>
+                            `;
+    contenedor.append(cardPizza);
 }
 
 // Verifica si el ID enviado por parámetro existe en la página actual
@@ -86,7 +141,7 @@ const verificarPagina=(idDiv)=>{
 //////////////////////////////////////////////////////////////
 let idTag;
 
-// INDEX
+// HOME
 idTag = "nuevas";
 if (verificarPagina(idTag) != false){
     cargaInicial();
@@ -102,4 +157,54 @@ if (verificarPagina(idTag) != false){
     cajas.forEach((caja)=>{
         agregarCardsProductos(caja);
     });
+}
+
+// MENÚ: Clásicas
+idTag = "clasicas";
+if (verificarPagina(idTag) != false){
+    cargaPizzas();
+    const pizzasC = pizzas.filter((pz)=> pz.tipo == "c" );
+    pizzasC.forEach((pizza)=>{
+        // agregarCardsClasicas(pizza);
+        agregarCardsPizzas(pizza, divClasicas);
+    });
+}
+
+// MENÚ: Especiales
+idTag = "especiales";
+if (verificarPagina(idTag) != false){
+    const pizzasS = pizzas.filter((pz)=> pz.tipo == "s" );
+    pizzasS.forEach((pizza)=>{
+        // agregarCardsClasicas(pizza);
+        agregarCardsPizzas(pizza, divEspeciales);
+    });
+}
+
+// MENÚ: Exclusivas
+idTag = "exclusivas";
+if (verificarPagina(idTag) != false){
+    const pizzasX = pizzas.filter((pz)=> pz.tipo == "x" );
+    pizzasX.forEach((pizza)=>{
+        // agregarCardsClasicas(pizza);
+        agregarCardsPizzas(pizza, divExclusivas);
+    });
+}
+
+///////////////////////////////////////////////////////////////
+
+// Ventana Agregar Pizza
+var modal = document.getElementById("ventanaModal");
+
+// Boton Cerrar
+let btnCerrar = document.querySelector(".btn-cerrar");
+btnCerrar.addEventListener("click" , () => {
+    modal.style.display = "none";
+});
+
+// Botones AGREGAR
+let botonesPizza = document.querySelectorAll(".btn-pizza");
+for (let i = 0; i < botonesPizza.length; i++){
+    botonesPizza[i].addEventListener("click", (e) => {
+            modal.style.display = "block";
+        });
 }
