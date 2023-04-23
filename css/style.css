@@ -176,12 +176,20 @@ main {
     margin-top: 15px; }
     .modal-content .select-caja .nes-select {
       max-width: 500px; }
+  .modal-content .subtotal-pizza {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px; }
+    .modal-content .subtotal-pizza #p-total {
+      max-width: 500px;
+      background-color: black;
+      color: white;
+      padding: 5px; }
   .modal-content .agregar-cancelar {
-    margin-top: 15px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column; }
     .modal-content .agregar-cancelar .btn-agregar {
-      margin-top: 10px;
       width: 200px; }
     .modal-content .agregar-cancelar .btn-cerrar {
       margin-top: 10px;

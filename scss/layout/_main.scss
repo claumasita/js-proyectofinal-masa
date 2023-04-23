@@ -175,13 +175,25 @@ main{
         }
     }
 
+    .subtotal-pizza{
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+        
+        #p-total{
+            max-width: 500px;
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }
+    }
+
     .agregar-cancelar{
-        margin-top: 15px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
 
         .btn-agregar{
-            margin-top: 10px;
             width: 200px;
         }
         .btn-cerrar{

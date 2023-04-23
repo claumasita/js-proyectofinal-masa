@@ -106,6 +106,10 @@
 
         </section>
 
+        <!--
+            Ventana modal que se muestra al detectar el Evento Click de cualquiera de los botones
+            AGREGAR, en las pizzas.
+        -->
         <section class="agregar-al-pedido">
             <div id="ventanaModal" class="modal">
 
@@ -116,14 +120,14 @@
                         <p class="p-pizza">Aquí va el nombre de la pizza seleccionada</p>
 
                         <!-- Tamaño de la Pizza -->
-                        <div class="container-fluid tamano">
+                        <div class="container-fluid tamano" id="select-tamano">
                             <label>
-                                <input type="radio" class="nes-radio" name="answer" checked />
-                                <span>gr ($4300)</span>
+                                <input type="radio" class="nes-radio" id="precio-gr" name="answer" checked/>
+                                <span id="span-gr">gr ($4300)</span>
                             </label>
                             <label>
-                                <input type="radio" class="nes-radio" name="answer" />
-                                <span>ch ($3800)</span>
+                                <input type="radio" class="nes-radio" id="precio-ch" name="answer" />
+                                <span id="span-ch">ch ($3800)</span>
                             </label>
                         </div>
 
@@ -131,26 +135,15 @@
                         <div class="container-fluid select-caja">
                             <label for="default_select">Caja</label>
                                 <div class="nes-select">
-                                <select required id="default_select">
-                                    <option value="0">standard</option>
-                                    <option value="1">copa del mundo</option>
-                                    <option value="2">dibu final</option>
-                                    <option value="3">messi</option>
-                                    <option value="4">messi campeón</option>
-                                    <option value="5">bomberman</option>
-                                    <option value="6">bowser</option>
-                                    <option value="7">ghostbusters</option>
-                                    <option value="8">ghost</option>
-                                    <option value="9">donkey kong</option>
-                                    <option value="10">link</option>
-                                    <option value="11">super mario</option>
-                                    <option value="12">peach</option>
-                                    <option value="13">perro</option>
-                                    <option value="14">sonic</option>
-                                    <option value="15">spider-man</option>
-                                    <option value="16">castlevania</option>
+                                <select required id="select-caja">
+                                    <!-- Se agregan las cajas mediante JS -->
                                 </select>
                                 </div>
+                        </div>
+
+                        <!-- Precio Total -->
+                        <div class="container-fluid subtotal-pizza">
+                            <p id="p-total">total: $4500</p>
                         </div>
 
                         <!-- Confirmar o Cancelar -->
