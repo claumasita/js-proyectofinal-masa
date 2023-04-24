@@ -114,10 +114,11 @@ main {
       align-items: center;
       justify-content: center;
       margin-bottom: 15px;
-      width: 250px;
+      width: 220px;
       height: 75px;
       background-color: #fef3db; }
     #nuevas .card-cajas .pizzaNombre, #productos .card-cajas .pizzaNombre, #clasicas .card-cajas .pizzaNombre, #especiales .card-cajas .pizzaNombre, #exclusivas .card-cajas .pizzaNombre {
+      width: 250px;
       color: white;
       text-align: center;
       margin-bottom: 0px;
