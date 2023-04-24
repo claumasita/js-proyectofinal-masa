@@ -1,5 +1,7 @@
 // Constantes
-const extraCaja = 250; // Costo extra para cajas Pizza Art
+const extraCaja  = 250; // Costo extra para cajas Pizza Art
+const porcentajePromo = 7;
+const montoPromo = 20000;
 
 // Clase para los nuevos diseños disponibles
 class Caja{
@@ -49,29 +51,30 @@ let item             = new Item();
 //                        FUNCIONES                         //
 //////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////
+//******************************************************************//
 // Función para cargar los items existentes al inicializar el programa
-/////////////////////////////////////////
+//******************************************************************//
 const agregarNuevaCaja =(codigo, descrip, imagen)=>{
     nuevasCajas.push(new Caja(parseInt(codigo), descrip, imagen));
 }
-/////////////////////////////////////////
+
+//******************************************************************//
 // Cajas
-/////////////////////////////////////////
+//******************************************************************//
 const agregarCaja =(codigo, descrip, imagen)=>{
     cajas.push(new Caja(parseInt(codigo), descrip, imagen));
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Pizzas
-/////////////////////////////////////////
+//******************************************************************//
 const agregarPizza =(codigo, nombre, precioCh, precioGr, tipo)=>{
     pizzas.push(new Pizza(parseInt(codigo), nombre, parseFloat(precioCh), parseFloat(precioGr), tipo));
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Agrega los objetos de los nuevos diseños al Array correspondiente
-/////////////////////////////////////////
+//******************************************************************//
 const cargaInicial=()=>{
     agregarNuevaCaja(1, "Caja Copa del Mundo", "caja-copa.png");
     agregarNuevaCaja(2, "Caja Dibu Final", "caja-dibu.png");
@@ -79,9 +82,9 @@ const cargaInicial=()=>{
     agregarNuevaCaja(4, "Caja Messi Campeon", "caja-messi-02.png");
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Agrega los objetos de los nuevos diseños al Array correspondiente
-/////////////////////////////////////////
+//******************************************************************//
 const cargaProductos=()=>{
     agregarCaja(0,  "Standard (gratis)" , "caja-standard.png");
     agregarCaja(1,  "Copa del Mundo", "caja-copa.png");
@@ -102,9 +105,9 @@ const cargaProductos=()=>{
     agregarCaja(16, "Castlevania"   , "caja-simon.png");
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Agrega los objetos de las pizzas al Array correspondiente
-/////////////////////////////////////////
+//******************************************************************//
 const cargaPizzas=()=>{
     // Clasicas (c)
     agregarPizza(1,  "muzzarella"                 , "2500" , "2900" , "c");
@@ -126,9 +129,9 @@ const cargaPizzas=()=>{
     agregarPizza(13, "super mario (champignones)" , "3900" , "4800" , "x");
 }
 
-/////////////////////////////////////////
-// Agrega los nuevos diseños al Contenedor correspondiente en INDEX.HTML
-/////////////////////////////////////////
+//******************************************************************//
+// Agrega los nuevos diseños al Contenedor correspondiente en INDEX
+//******************************************************************//
 const agregarCardsNuevas=(cajaNueva)=>{
     const cardNueva = document.createElement("div");
     cardNueva.className = "container-fluid card-cajas";
@@ -139,9 +142,9 @@ const agregarCardsNuevas=(cajaNueva)=>{
     divNuevas.append(cardNueva);
 }
 
-/////////////////////////////////////////
-// Agrega todos los diseños al Contenedor correspondiente en PRODUCTOS.HTML
-/////////////////////////////////////////
+//*********************************************************************//
+// Agrega todos los diseños al Contenedor correspondiente en PRODUCTOS
+//*********************************************************************//
 const agregarCardsProductos=(caja)=>{
     const cardCaja = document.createElement("div");
     cardCaja.className = "container-fluid card-cajas";
@@ -152,9 +155,9 @@ const agregarCardsProductos=(caja)=>{
     divProductos.append(cardCaja);
 }
 
-/////////////////////////////////////////
-// Agrega todos los diseños al Contenedor correspondiente en MENU.HTML
-/////////////////////////////////////////
+//******************************************************************//
+// Agrega todos los diseños al Contenedor correspondiente en MENU
+//******************************************************************//
 const agregarCardsPizzas=(pizza, contenedor)=>{
     const cardPizza = document.createElement("div");
     cardPizza.className = "container-fluid card-cajas card-pizza";
@@ -167,33 +170,33 @@ const agregarCardsPizzas=(pizza, contenedor)=>{
     contenedor.append(cardPizza);
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Verifica si el ID enviado por parámetro existe en la página actual
-/////////////////////////////////////////
+//******************************************************************//
 const existeID=(idDiv)=>{
     const page = document.getElementById(idDiv);
     console.log(page);
     return(page ?? false);
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Seleccionar elemento para el carrito:
-/////////////////////////////////////////
+//******************************************************************//
 const getPizza =(codigo)=>{
     return (pizzas.find((el)=> el.codigo == parseInt(codigo)));
 }
 
-/////////////////////////////////////////
+//******************************************************************//
 // Actualiza precio total mostrado en Modal
-/////////////////////////////////////////
+//******************************************************************//
 const actualizarTotalModal =( { precioPizza, precioCaja } )=>{
     const subTotal = precioPizza + precioCaja;
     document.querySelector("#p-total").innerHTML = `total: $${subTotal}`;
 };
 
-/////////////////////////////////////////
+//******************************************************************//
 // Muestra el detalle previo a agregar al Carrito
-/////////////////////////////////////////
+//******************************************************************//
 const mostrarDetallesPizza=(codigo)=>{
     pizzaSelec = getPizza(codigo);
     item = new Item();
@@ -217,12 +220,11 @@ const mostrarDetallesPizza=(codigo)=>{
     actualizarTotalModal(item);
 };
 
-/////////////////////////////////////////
+//******************************************************************//
 // Llena la lista de Cajas Disponibles (ventana modal)
-/////////////////////////////////////////
+//******************************************************************//
 const llenarListaCajas=()=>{
     const selectCaja = document.querySelector("#select-caja");
-
     selectCaja.innerHTML = "";
     cajas.forEach((caja)=>{
         selectCaja.innerHTML = selectCaja.innerHTML + "\n<option value='" + caja.codigo + "'>" + caja.descrip + "</option>";
@@ -241,6 +243,16 @@ if (existeID(idTag) != false){
     nuevasCajas.forEach((nuevaCaja)=>{
         agregarCardsNuevas(nuevaCaja);
     });
+}
+
+idTag = "promo";
+if (existeID(idTag) != false){
+
+    // Establece el monto a superar para adquirir la promoción
+    document.querySelector("#monto-promo").innerHTML = montoPromo;
+
+    // Establece el porcentaje para descuento en la promoción
+    document.querySelector("#porcen-promo").innerHTML = porcentajePromo;
 }
 
 // PRODUCTOS
@@ -284,8 +296,11 @@ if (existeID(idTag) != false){
 }
 
 // MENÚ: Lista de Pizzas en ventana modal
-cargaProductos();
-llenarListaCajas();
+idTag = "ventanaModal";
+if (existeID(idTag) != false){
+    cargaProductos();
+    llenarListaCajas();
+}
 
 // Listener para RadioButton de Tamaño
 idTag = "select-tamano";
@@ -294,11 +309,9 @@ if (existeID(idTag) != false){
     document.querySelectorAll("input[type=radio][name='answer']").forEach((radio) => {
         radio.addEventListener('change', (e)=>{
             if (e.target.id == "precio-gr"){
-                // document.querySelector("#p-total").innerHTML = `total: $${pizzaSelec.precioGr}`;
                 item.precioPizza = pizzaSelec.precioGr;
                 actualizarTotalModal(item);
             }else{
-                // document.querySelector("#p-total").innerHTML = `total: $${pizzaSelec.precioCh}`;
                 item.precioPizza = pizzaSelec.precioCh;
                 actualizarTotalModal(item);
             };
@@ -310,6 +323,8 @@ if (existeID(idTag) != false){
 idTag = "select-caja";
 if (existeID(idTag) != false){
     document.querySelector("#select-caja").addEventListener('change' , (e)=>{
+
+        // Actualiza el precio depende la caja seleccionada
         if (e.target.value=='0'){
             item.precioCaja = 0;
             actualizarTotalModal(item);
@@ -317,31 +332,37 @@ if (existeID(idTag) != false){
             item.precioCaja = extraCaja;
             actualizarTotalModal(item);
         }
-
-        // Actualiza el precio
-        //e.target.value;
-        //document.querySelector("#p-total").innerHTML = `total: $${pizzaSelec.precioCh}`;
     });
 }
 
 ///////////////////////////////////////////////////////////////
 
 // Ventana Agregar Pizza
-var modal = document.getElementById("ventanaModal");
+idTag = "ventanaModal";
+if (existeID(idTag) != false){
 
-// Boton Cerrar
-let btnCerrar = document.querySelector(".btn-cerrar");
-btnCerrar.addEventListener("click" , () => {
-    modal.style.display = "none";
-});
+    var modal = document.getElementById("ventanaModal");
 
-// Botones AGREGAR
-let botonesPizza = document.querySelectorAll(".btn-pizza");
-for (let i = 0; i < botonesPizza.length; i++){
-    botonesPizza[i].addEventListener("click", (e) => {
+    // Boton Aceptar
+    let btnAceptar = document.querySelector(".btn-agregar");
+    btnAceptar.addEventListener("click" , () => {
+        modal.style.display = "none";
+    });
 
-            // Ventana modal con detalle del item a agregar
-            mostrarDetallesPizza(parseInt(e.target.id));
-            modal.style.display = "block";
-        });
+    // Boton Cerrar
+    let btnCerrar = document.querySelector(".btn-cerrar");
+    btnCerrar.addEventListener("click" , () => {
+        modal.style.display = "none";
+    });
+
+    // Botones AGREGAR
+    let botonesPizza = document.querySelectorAll(".btn-pizza");
+    for (let i = 0; i < botonesPizza.length; i++){
+        botonesPizza[i].addEventListener("click", (e) => {
+
+                // Ventana modal con detalle del item a agregar
+                mostrarDetallesPizza(parseInt(e.target.id));
+                modal.style.display = "block";
+            });
+    }
 }

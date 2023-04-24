@@ -86,7 +86,7 @@ main {
   .contenedor-principal article {
     position: relative;
     width: 90%;
-    min-height: 300px;
+    min-height: 250px;
     margin: 0 auto;
     margin-top: 25px;
     background-color: white; }
@@ -99,13 +99,13 @@ main {
   flex-wrap: wrap; }
   #nuevas .card-cajas, #productos .card-cajas, #clasicas .card-cajas, #especiales .card-cajas, #exclusivas .card-cajas {
     padding-bottom: 25px;
-    width: 300px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center; }
     #nuevas .card-cajas .caja, #productos .card-cajas .caja, #clasicas .card-cajas .caja, #especiales .card-cajas .caja, #exclusivas .card-cajas .caja {
       margin: 0 auto;
-      height: 220px;
+      height: 250px;
       width: 220px;
       background-size: cover;
       background-position: center; }
@@ -143,7 +143,6 @@ main {
 #clasicas, #especiales, #exclusivas {
   margin-top: 30px; }
 
-/* Fondo modal: negro con opacidad al 50% */
 .modal {
   display: none;
   position: fixed;
@@ -154,7 +153,6 @@ main {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5); }
 
-/* Ventana o caja modal */
 .modal-content {
   border-radius: 0px;
   position: relative;
@@ -162,11 +160,7 @@ main {
   margin: auto;
   padding: 5px;
   max-width: 1300px;
-  width: 95%;
-  -webkit-animation-name: animarsuperior;
-  -webkit-animation-duration: 0.5s;
-  animation-name: animarsuperior;
-  animation-duration: 0.5s; }
+  width: 95%; }
   .modal-content .titulo-agregar {
     background-color: black; }
   .modal-content .tamano {
@@ -194,19 +188,3 @@ main {
     .modal-content .agregar-cancelar .btn-cerrar {
       margin-top: 10px;
       width: 200px; }
-
-@-webkit-keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0; }
-  to {
-    top: 0;
-    opacity: 1; } }
-
-@keyframes animarsuperior {
-  from {
-    top: -300px;
-    opacity: 0; }
-  to {
-    top: 0;
-    opacity: 1; } }

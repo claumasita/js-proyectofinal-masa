@@ -20,15 +20,13 @@ main{
     article{
         position: relative;
         width: 90%;
-        min-height: 300px;
+        min-height: 250px;
         margin: 0 auto;
         margin-top: 25px;
         background-color: white;
     }
 
     .nes-container.with-title > .title {
-        //  padding: 0 0.5rem;
-        // margin: -1.8rem 0 1rem;
         font-size: 1.2rem;
     }
 }
@@ -40,14 +38,14 @@ main{
 
     .card-cajas{
         padding-bottom: 25px;
-        width: 300px;
+        width: 250px;
         display: flex;
         flex-direction: column;
         align-items: center;
 
         .caja{
             margin: 0 auto;
-            height: 220px;
+            height: 250px;
             width: 220px;
             background-size: cover;
             background-position: center;
@@ -103,10 +101,7 @@ main{
     margin-top: 30px;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/// 
-///  
-/* Fondo modal: negro con opacidad al 50% */
+// Fondo modal: negro con opacidad al 50%
 .modal {
     display: none;      // Por defecto, estará oculto
     position: fixed;    // Posición fija
@@ -116,37 +111,10 @@ main{
     height: 100%;       // Altura completa
     overflow: auto;     // Se activará el scroll si es necesario
     background-color: rgba(0,0,0,0.5); // Color negro con opacidad del 50%
-
-    // .titulo-agregar{
-    //     background-color: black;
-    // }
-
-    // .tamano{
-    //     display: flex;
-    //     flex-direction: column;
-    // }
-
-    // .agregar-cancelar{
-    //     display: flex;
-    //     flex-direction: column;
-
-    //     .btn-agregar{
-    //         margin-top: 10px;
-    //         width: 200px;
-    //     }
-    //     .btn-cerrar{
-    //         margin-top: 10px;
-    //         width: 200px;
-    //     }
-    // }
-
 }
 
-  /* Ventana o caja modal */
+// Contenedor dentro de la Ventana Modal
 .modal-content {
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
     border-radius: 0px;
     position: relative;
     background-color: white;
@@ -154,10 +122,10 @@ main{
     padding: 5px;
     max-width: 1300px;
     width: 95%;
-    -webkit-animation-name: animarsuperior;
-    -webkit-animation-duration: 0.5s;
-    animation-name: animarsuperior;
-    animation-duration: 0.5s;
+    // -webkit-animation-name: animarsuperior;
+    // -webkit-animation-duration: 0.5s;
+    // animation-name: animarsuperior;
+    // animation-duration: 0.5s;
 
     .titulo-agregar{
         background-color: black;
@@ -204,13 +172,13 @@ main{
 
 }
 
-// ANIMACION
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
-}
+// // ANIMACION
+// @-webkit-keyframes animatetop {
+//     from {top:-300px; opacity:0} 
+//     to {top:0; opacity:1}
+// }
 
-@keyframes animarsuperior {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
-}
+// @keyframes animarsuperior {
+//     from {top:-300px; opacity:0}
+//     to {top:0; opacity:1}
+// }
