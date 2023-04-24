@@ -189,3 +189,36 @@ main {
     .modal-content .agregar-cancelar .btn-cerrar {
       margin-top: 10px;
       width: 200px; }
+
+#carrito {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+  #carrito .card-item {
+    margin-bottom: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fef3db; }
+    #carrito .card-item .pizza-carrito {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      width: 250px;
+      height: 75px;
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 2px; }
+    #carrito .card-item .descrip-carrito {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fef3db;
+      border: none;
+      padding: 2px; }
+    #carrito .card-item .nes-btn {
+      margin: 15px;
+      max-width: 180px; }

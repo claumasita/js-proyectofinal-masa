@@ -83,7 +83,7 @@ const cargaInicial=()=>{
 }
 
 //******************************************************************//
-// Agrega los objetos de los nuevos diseños al Array correspondiente
+// Agrega los objetos de todos los diseños al Array correspondiente
 //******************************************************************//
 const cargaProductos=()=>{
     agregarCaja(0,  "Standard (gratis)" , "caja-standard.png");
@@ -175,7 +175,6 @@ const agregarCardsPizzas=(pizza, contenedor)=>{
 //******************************************************************//
 const existeID=(idDiv)=>{
     const page = document.getElementById(idDiv);
-    console.log(page);
     return(page ?? false);
 }
 
@@ -231,138 +230,144 @@ const llenarListaCajas=()=>{
     });
 }
 
-//////////////////////////////////////////////////////////////
-//                   INICIO DEL PROGRAMA                    //
-//////////////////////////////////////////////////////////////
-let idTag;
+//******************************************************************//
+// Rutinas para pagina INDEX
+//******************************************************************//
+const rutinasHome=()=>{
 
-// HOME
-idTag = "nuevas";
-if (existeID(idTag) != false){
-    cargaInicial();
-    nuevasCajas.forEach((nuevaCaja)=>{
-        agregarCardsNuevas(nuevaCaja);
-    });
-}
-
-idTag = "promo";
-if (existeID(idTag) != false){
-
-    // Establece el monto a superar para adquirir la promoción
-    document.querySelector("#monto-promo").innerHTML = montoPromo;
-
-    // Establece el porcentaje para descuento en la promoción
-    document.querySelector("#porcen-promo").innerHTML = porcentajePromo;
-}
-
-// PRODUCTOS
-idTag = "productos";
-if (existeID(idTag) != false){
-    cargaProductos();
-    cajas.forEach((caja)=>{
-        agregarCardsProductos(caja);
-    });
-
-    // Establece el valor para el costo extra de Cajas Pizza Art:
-    document.querySelector("#extra-caja").innerHTML = extraCaja;
-}
-
-// MENÚ: Clásicas
-idTag = "clasicas";
-if (existeID(idTag) != false){
-    cargaPizzas();
-    const pizzasC = pizzas.filter((pz)=> pz.tipo == "c" );
-    pizzasC.forEach((pizza)=>{
-        agregarCardsPizzas(pizza, divClasicas);
-    });
-}
-
-// MENÚ: Especiales
-idTag = "especiales";
-if (existeID(idTag) != false){
-    const pizzasS = pizzas.filter((pz)=> pz.tipo == "s" );
-    pizzasS.forEach((pizza)=>{
-        agregarCardsPizzas(pizza, divEspeciales);
-    });
-}
-
-// MENÚ: Exclusivas
-idTag = "exclusivas";
-if (existeID(idTag) != false){
-    const pizzasX = pizzas.filter((pz)=> pz.tipo == "x" );
-    pizzasX.forEach((pizza)=>{
-        agregarCardsPizzas(pizza, divExclusivas);
-    });
-}
-
-// MENÚ: Lista de Pizzas en ventana modal
-idTag = "ventanaModal";
-if (existeID(idTag) != false){
-    cargaProductos();
-    llenarListaCajas();
-}
-
-// Listener para RadioButton de Tamaño
-idTag = "select-tamano";
-if (existeID(idTag) != false){
-
-    document.querySelectorAll("input[type=radio][name='answer']").forEach((radio) => {
-        radio.addEventListener('change', (e)=>{
-            if (e.target.id == "precio-gr"){
-                item.precioPizza = pizzaSelec.precioGr;
-                actualizarTotalModal(item);
-            }else{
-                item.precioPizza = pizzaSelec.precioCh;
-                actualizarTotalModal(item);
-            };
+    const idTag = "pag-home";
+    if (existeID(idTag) != false){
+        cargaInicial();
+        nuevasCajas.forEach((nuevaCaja)=>{
+            agregarCardsNuevas(nuevaCaja);
         });
-    });
-}
 
-// Listener para Select de Tipo de Caja
-idTag = "select-caja";
-if (existeID(idTag) != false){
-    document.querySelector("#select-caja").addEventListener('change' , (e)=>{
+        // Establece el monto a superar para adquirir la promoción
+        document.querySelector("#monto-promo").innerHTML = montoPromo;
 
-        // Actualiza el precio depende la caja seleccionada
-        if (e.target.value=='0'){
-            item.precioCaja = 0;
-            actualizarTotalModal(item);
-        }else{
-            item.precioCaja = extraCaja;
-            actualizarTotalModal(item);
-        }
-    });
-}
-
-///////////////////////////////////////////////////////////////
-
-// Ventana Agregar Pizza
-idTag = "ventanaModal";
-if (existeID(idTag) != false){
-
-    var modal = document.getElementById("ventanaModal");
-
-    // Boton Aceptar
-    let btnAceptar = document.querySelector(".btn-agregar");
-    btnAceptar.addEventListener("click" , () => {
-        modal.style.display = "none";
-    });
-
-    // Boton Cerrar
-    let btnCerrar = document.querySelector(".btn-cerrar");
-    btnCerrar.addEventListener("click" , () => {
-        modal.style.display = "none";
-    });
-
-    // Botones AGREGAR
-    let botonesPizza = document.querySelectorAll(".btn-pizza");
-    for (let i = 0; i < botonesPizza.length; i++){
-        botonesPizza[i].addEventListener("click", (e) => {
-
-                // Ventana modal con detalle del item a agregar
-                mostrarDetallesPizza(parseInt(e.target.id));
-                modal.style.display = "block";
-            });
+        // Establece el porcentaje para descuento en la promoción
+        document.querySelector("#porcen-promo").innerHTML = porcentajePromo;
     }
 }
+
+//******************************************************************//
+// Rutinas para pagina PRODUCTOS (Cajas)
+//******************************************************************//
+const rutinasProductos=()=>{
+
+    const idTag = "pag-productos";
+    if (existeID(idTag) != false){
+        cargaProductos();
+        cajas.forEach((caja)=>{
+            agregarCardsProductos(caja);
+        });
+    
+        // Establece el valor para el costo extra de Cajas Pizza Art:
+        document.querySelector("#extra-caja").innerHTML = extraCaja;
+    }
+}
+
+//******************************************************************//
+// Rutinas para Ventana Modal
+//******************************************************************//
+const rutinasModal=()=>{
+    cargaProductos();
+    llenarListaCajas();
+
+    // Listener para RadioButton de Tamaño
+    let idTag = "select-tamano";
+    if (existeID(idTag) != false){
+
+        document.querySelectorAll("input[type=radio][name='answer']").forEach((radio) => {
+            radio.addEventListener('change', (e)=>{
+                if (e.target.id == "precio-gr"){
+                    item.precioPizza = pizzaSelec.precioGr;
+                    actualizarTotalModal(item);
+                }else{
+                    item.precioPizza = pizzaSelec.precioCh;
+                    actualizarTotalModal(item);
+                };
+            });
+        });
+    }
+
+    // Listener para Select de Tipo de Caja
+    idTag = "select-caja";
+    if (existeID(idTag) != false){
+        document.querySelector("#select-caja").addEventListener('change' , (e)=>{
+
+            // Actualiza el precio depende la caja seleccionada
+            if (e.target.value=='0'){
+                item.precioCaja = 0;
+                actualizarTotalModal(item);
+            }else{
+                item.precioCaja = extraCaja;
+                actualizarTotalModal(item);
+            }
+        });
+    }
+
+    // Listener Boton Aceptar
+    const ventanaModal = document.querySelector("#ventanaModal");
+    document.querySelector(".btn-agregar").addEventListener("click" , () => {
+        ventanaModal.style.display = "none";
+    });
+
+    // Listener Boton Cerrar
+    document.querySelector(".btn-cerrar").addEventListener("click" , () => {
+        ventanaModal.style.display = "none";
+    });
+}
+
+//******************************************************************//
+// Rutinas para pagina MENU
+//******************************************************************//
+const rutinasMenu=()=>{
+
+    const idTag = "pag-menu";
+    if (existeID(idTag) != false){
+
+        // MENÚ: Clásicas
+        cargaPizzas();
+        const pizzasC = pizzas.filter((pz)=> pz.tipo == "c" );
+        pizzasC.forEach((pizza)=>{
+            agregarCardsPizzas(pizza, divClasicas);
+        });
+
+        // MENÚ: Especiales
+        const pizzasS = pizzas.filter((pz)=> pz.tipo == "s" );
+        pizzasS.forEach((pizza)=>{
+            agregarCardsPizzas(pizza, divEspeciales);
+        });
+
+        // MENÚ: Exclusivas
+        const pizzasX = pizzas.filter((pz)=> pz.tipo == "x" );
+        pizzasX.forEach((pizza)=>{
+            agregarCardsPizzas(pizza, divExclusivas);
+        });
+
+        // Botones AGREGAR (invoca a ventana Modal)
+        const botonesPizza = document.querySelectorAll(".btn-pizza");
+        for (let i = 0; i < botonesPizza.length; i++){
+            botonesPizza[i].addEventListener("click", (e) => {
+
+                    // Ventana modal con detalle del item a agregar
+                    mostrarDetallesPizza(parseInt(e.target.id));
+                    ventanaModal.style.display = "block";
+                });
+        }
+
+        // MENÚ: Lista de Pizzas en ventana modal
+        rutinasModal();
+    }
+}
+
+//******************************************************************//
+//                      INICIO DEL PROGRAMA                         //
+//******************************************************************//
+//******************************************************************//
+
+// Procesos para Cada Página
+rutinasHome();
+rutinasProductos();
+rutinasMenu();

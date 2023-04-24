@@ -35,9 +35,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <button class="navbar-toggler carrito">
-                    <a href="./carrito.html">
-                        <span class="navbar-toggler-icon icon-cart"></span>
-                    </a>
+                    <span class="navbar-toggler-icon icon-cart"></span>
                 </button>
             </div>
 
@@ -58,7 +56,7 @@
                             <a class="nes-btn nes-btn-a" href="./menu.html">Menú</a>
                         </li>
                         <li class="nes-li">
-                            <a class="nes-btn is-primary nes-btn-a" href="#">Diseños</a>
+                            <a class="nes-btn nes-btn-a" href="./productos.html">Diseños</a>
                         </li>
                         <li class="nes-li">
                             <a class="nes-btn nes-btn-a" href="#">Nosotros</a>
@@ -76,16 +74,39 @@
     </header>
 
 <!-- MAIN -->
-    <main class="container-fluid" id="pag-productos">
+    <main class="container-fluid" id="pag-carrito">
         <section class="contenedor-principal">
 
             <article class="nes-container with-title">
-                <p class="title">Nuestros diseños</p>
-                <p>Además del mejor sabor, tenemos los mejores diseños en nuestras exclusivas <strong>cajas Pizza Art!</strong></p>
-                <p>Podes elegir la que más te guste, abonando una diferencia de $<span id="extra-caja"></span>.</p>
+                <p class="title">Carrito</p>
+                <div class="container-fluid justify-content-center" id="carrito">
+                    <!-- Aquí se cargarán mediante JS las Cards con todos los items agregados al Carrito -->
 
-                <div class="container-fluid justify-content-center" id="productos">
-                    <!-- Aquí se cargarán mediante JS las Cards con todos los diseños -->
+
+                    <div class="container-fluid card-item">
+                        <div class="nes-container is-centered pizza-carrito">Super Mario (champignones)</div>
+                        <div class="nes-container is-centered descrip-carrito">Grande</div>
+                        <div class="nes-container is-centered descrip-carrito">Caja: Copa del mundo</div>
+                        <div class="nes-container is-centered descrip-carrito">$4200</div>
+                        <button class="nes-btn is-error">eliminar</button>
+                    </div>
+
+                    <div class="container-fluid card-item">
+                        <div class="nes-container is-centered pizza-carrito">Jamon y Morrones</div>
+                        <div class="nes-container is-centered descrip-carrito">Grande</div>
+                        <div class="nes-container is-centered descrip-carrito">Caja: Standard</div>
+                        <div class="nes-container is-centered descrip-carrito">$3500</div>
+                        <button class="nes-btn is-error">eliminar</button>
+                    </div>
+
+                    <div class="container-fluid card-item">
+                        <div class="nes-container is-centered pizza-carrito">Donkey Kong (con bananas)</div>
+                        <div class="nes-container is-centered descrip-carrito">Grande</div>
+                        <div class="nes-container is-centered descrip-carrito">Caja: GhostBusters</div>
+                        <div class="nes-container is-centered descrip-carrito">$5000</div>
+                        <button class="nes-btn is-error">eliminar</button>
+                    </div>
+
                 </div>
             </article>
 
