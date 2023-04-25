@@ -24,13 +24,22 @@
             padding: 2px;
         }
 
-        .descrip-carrito{
+        .descrip-carrito, .subtotal-carrito{
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #fef3db;
             border: none;
             padding: 2px;
+        }
+
+        .subtotal-carrito{
+            margin-top: 5px;
+            padding-bottom: 5px;
+            padding-top: 10px;
+            width: 225px;
+            border-top: solid black;
+            border-bottom: solid black;
         }
 
         .nes-btn{

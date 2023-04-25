@@ -25,7 +25,7 @@ class Pizza{
 
 // Clase para Items del Carrito
 class Item{
-    constructor(codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja){
+    constructor(codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja, subTotal){
         this.codigoPizza = codigoPizza;
         this.nombrePizza = nombrePizza,
         this.tamano      = tamano;
@@ -33,6 +33,7 @@ class Item{
         this.codigoCaja  = codigoCaja;
         this.nombreCaja  = nombreCaja;
         this.precioCaja  = precioCaja;
+        this.subTotal    = subTotal;
     }
 }
 
@@ -86,7 +87,7 @@ const cargaInicial=()=>{
 // Agrega los objetos de todos los diseños al Array correspondiente
 //******************************************************************//
 const cargaProductos=()=>{
-    agregarCaja(0,  "Standard (gratis)" , "caja-standard.png");
+    agregarCaja(0,  "Standard"      , "caja-standard.png");
     agregarCaja(1,  "Copa del Mundo", "caja-copa.png");
     agregarCaja(2,  "Dibu Final"    , "caja-dibu.png");
     agregarCaja(3,  "Messi"         , "caja-messi-01.png");
@@ -186,6 +187,13 @@ const getPizza =(codigo)=>{
 }
 
 //******************************************************************//
+// Retorna un caja según el código enviado:
+//******************************************************************//
+const getCaja =(codigo)=>{
+    return (cajas.find((el)=> el.codigo == parseInt(codigo)));
+}
+
+//******************************************************************//
 // Actualiza precio total mostrado en Modal
 //******************************************************************//
 const actualizarTotalModal =( { precioPizza, precioCaja } )=>{
@@ -200,6 +208,14 @@ const mostrarDetallesPizza=(codigo)=>{
     pizzaSelec = getPizza(codigo);
     item = new Item();
 
+    // Valores por Default para el Item
+    item.codigoPizza = pizzaSelec.codigo;
+    item.nombrePizza = pizzaSelec.nombre;
+    item.precioPizza = pizzaSelec.precioGr;
+    item.tamano      = "Grande";
+    item.precioCaja  = 0;
+    item.codigoCaja  = 0;
+
     // Muestra el nombre de la Pizza Seleccionada
     const contenedorNombrePizza = document.querySelector(".p-pizza");
     contenedorNombrePizza.innerHTML = pizzaSelec.nombre;
@@ -210,13 +226,11 @@ const mostrarDetallesPizza=(codigo)=>{
     document.querySelectorAll(".nes-radio")[0].checked = true;
 
     // Caja por Default: Standard (sin costo extra)
-    item.precioCaja = 0;
     document.querySelector("#select-caja").selectedIndex = 0;
 
-    // Precio por Default: Grande
-    item.precioPizza = pizzaSelec.precioGr;
-    //document.querySelector("#p-total").innerHTML = `total: $${pizzaSelec.precioGr}`;
+    // Precio y tamaño por Default: Grande
     actualizarTotalModal(item);
+
 };
 
 //******************************************************************//
@@ -231,12 +245,86 @@ const llenarListaCajas=()=>{
 }
 
 //******************************************************************//
+// Elimina todos los elementos del Carrito
+//******************************************************************//
+const vaciarCarrito=()=>{localStorage.removeItem("carrito");}
+
+//******************************************************************//
+// Recupera JSON desde LocalStorage
+//******************************************************************//
+const getJsonStorage=(clave)=>{
+    return localStorage.getItem(clave);
+};
+
+//******************************************************************//
+// Recibe JSON para almacenar en el LocalStorage
+//******************************************************************//
+const agregarJsonStorage=(clave, json)=>{
+    localStorage.setItem(clave, json);
+};
+
+//******************************************************************//
+// Convierte Carrito a JSON y lo almacena en el LocalStorage
+//******************************************************************//
+const guardarCarritoStorage=(items)=>{
+
+    const enJSON = JSON.stringify(items);
+    vaciarCarrito();
+    agregarJsonStorage("carrito", enJSON);
+
+};
+
+//******************************************************************//
+// Convierte JSON (desde Storage) a Carrito
+//******************************************************************//
+const getCarritoStorage=()=>{
+
+    const carrito = JSON.parse(getJsonStorage("carrito"));
+    // carrito == null ? return [] : return carrito;
+    if (carrito != null){
+        return carrito;
+    }else{
+        return [];
+    }
+};
+
+//******************************************************************//
+// Agrega el Item al Carrito
+//******************************************************************//
+const agregarItemCarrito=(item)=>{
+
+    // Baja los items previos en el Carrito:
+    const items = getCarritoStorage();
+
+    // Actualiza valores antes de agregar al Carrito:
+    item.subTotal   = item.precioPizza + item.precioCaja;
+    const { descrip } = getCaja(item.codigoCaja);
+    item.nombreCaja = descrip;
+
+    items.push(new Item(
+        item.codigoPizza,
+        item.nombrePizza,
+        item.tamano,
+        item.precioPizza,
+        item.codigoCaja,
+        item.nombreCaja,
+        item.precioCaja,
+        item.subTotal
+        ));
+
+    // Almacena Carrito con items, en Local Storage
+    guardarCarritoStorage(items);
+
+}
+
+//******************************************************************//
 // Rutinas para pagina INDEX
 //******************************************************************//
 const rutinasHome=()=>{
 
     const idTag = "pag-home";
     if (existeID(idTag) != false){
+        vaciarCarrito(); // TEMPORAL
         cargaInicial();
         nuevasCajas.forEach((nuevaCaja)=>{
             agregarCardsNuevas(nuevaCaja);
@@ -282,9 +370,11 @@ const rutinasModal=()=>{
             radio.addEventListener('change', (e)=>{
                 if (e.target.id == "precio-gr"){
                     item.precioPizza = pizzaSelec.precioGr;
+                    item.tamano      = "Grande";
                     actualizarTotalModal(item);
                 }else{
                     item.precioPizza = pizzaSelec.precioCh;
+                    item.tamano      = "Chica";
                     actualizarTotalModal(item);
                 };
             });
@@ -295,13 +385,14 @@ const rutinasModal=()=>{
     idTag = "select-caja";
     if (existeID(idTag) != false){
         document.querySelector("#select-caja").addEventListener('change' , (e)=>{
-
             // Actualiza el precio depende la caja seleccionada
             if (e.target.value=='0'){
                 item.precioCaja = 0;
+                item.codigoCaja = 0;
                 actualizarTotalModal(item);
             }else{
                 item.precioCaja = extraCaja;
+                item.codigoCaja = parseInt(e.target.value);
                 actualizarTotalModal(item);
             }
         });
@@ -310,6 +401,7 @@ const rutinasModal=()=>{
     // Listener Boton Aceptar
     const ventanaModal = document.querySelector("#ventanaModal");
     document.querySelector(".btn-agregar").addEventListener("click" , () => {
+        agregarItemCarrito(item);
         ventanaModal.style.display = "none";
     });
 
@@ -357,8 +449,47 @@ const rutinasMenu=()=>{
                 });
         }
 
-        // MENÚ: Lista de Pizzas en ventana modal
+        // MENÚ: Lista de Pizzas en ventana modal (Agrega Listeners)
         rutinasModal();
+    }
+}
+
+//******************************************************************//
+// Agregar Card CARRITO
+//******************************************************************//
+const agregarCardCarrito=(item)=>{
+
+    const cardCarrito = document.createElement("div");
+    cardCarrito.className = "container-fluid card-item";
+    cardCarrito.innerHTML = `
+                            <div class="nes-container is-centered pizza-carrito">${item.nombrePizza}</div>
+                            <div class="nes-container is-centered descrip-carrito">${item.tamano}</div>
+                            <div class="nes-container is-centered descrip-carrito">Caja: ${item.nombreCaja}</div>
+                            <div class="nes-container is-centered subtotal-carrito">total $${item.subTotal}</div>
+                            <button class="nes-btn is-error">eliminar</button>
+                            `;
+    document.querySelector("#carrito").append(cardCarrito);
+}
+
+//******************************************************************//
+// Rutinas para pagina CARRITO
+//******************************************************************//
+const rutinasCarrito=()=>{
+
+    const idTag = "pag-carrito";
+    if (existeID(idTag) != false){
+
+        const items = getCarritoStorage();
+        if(items.length > 0){
+            // Agregar Cards del Carrito
+            items.forEach((item)=>{
+                agregarCardCarrito(item);
+            });
+
+            // Agregar Listener para los Botones ELIMINAR de las Card
+            // del Carrito
+
+        }
     }
 }
 
@@ -371,3 +502,4 @@ const rutinasMenu=()=>{
 rutinasHome();
 rutinasProductos();
 rutinasMenu();
+rutinasCarrito();

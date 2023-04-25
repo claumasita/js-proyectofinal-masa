@@ -212,13 +212,20 @@ main {
       color: white;
       border: none;
       padding: 2px; }
-    #carrito .card-item .descrip-carrito {
+    #carrito .card-item .descrip-carrito, #carrito .card-item .subtotal-carrito {
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: #fef3db;
       border: none;
       padding: 2px; }
+    #carrito .card-item .subtotal-carrito {
+      margin-top: 5px;
+      padding-bottom: 5px;
+      padding-top: 10px;
+      width: 225px;
+      border-top: solid black;
+      border-bottom: solid black; }
     #carrito .card-item .nes-btn {
       margin: 15px;
       max-width: 180px; }
