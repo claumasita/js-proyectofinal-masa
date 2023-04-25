@@ -84,48 +84,35 @@
                 </div>
             </article>
 
-            <!-- <article class="nes-container">
-                <div>Sub-Total: $123456.00</div>
-                <div>Descuento: $123456.00</div>
-                <div>Total: $123456.00</div>
-            </article> -->
-
-            <!-- <div class="nes-table-responsive carrito-tabla-totales"> -->
+            <!-- Tabla con Totales -->
             <div class="container-fluid carrito-tabla-totales">
                 <table class="nes-container">
                     <tbody>
                         <tr>
                             <td>Sub total</td>
-                            <td>$123456.00</td>
+                            <td id="carrito-subtotal">$0.00</td>
                         </tr>
                         <tr>
                             <td>Descuento</td>
-                            <td>$123456.00</td>
+                            <td id="carrito-descuento">$0.00</td>
                         </tr>
                         <tr>
-                            <td>Total</td>
-                            <td>$123456.00</td>
+                            <td class="td-total">Total</td>
+                            <td class="td-total" id="carrito-total">$0.00</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-        </section>
-
-        <section>
-
-            <!-- Toast de Bootstrap para informar que se eliminó el Item del Carrito -->
-            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="me-auto">Carrito</strong>
-                        <small>Pizza Art</small>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">Item eliminado.</div>
-                </div>
+            <div class="container fluid botones-carrito">
+                <button class="nes-btn is-success" id="btn-confirmar-compra">Confirmar Compra</button>
+                <button class="nes-btn is-error" id="btn-limpiar-carrito">Limpiar Carrito</button>
             </div>
 
+        </section>
+
+        <!-- Toast de Bootstrap generado por JS para informar que se eliminó el Item del Carrito -->
+        <section class="mensaje-toast">
         </section>
 
     </main>

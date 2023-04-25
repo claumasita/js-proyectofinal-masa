@@ -1,8 +1,3 @@
-// Constantes
-const extraCaja  = 250; // Costo extra para cajas Pizza Art
-const porcentajePromo = 7;
-const montoPromo = 20000;
-
 // Clase para los nuevos diseños disponibles
 class Caja{
     constructor(codigo, descrip, imagen){
@@ -25,7 +20,8 @@ class Pizza{
 
 // Clase para Items del Carrito
 class Item{
-    constructor(codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja, subTotal){
+    constructor(id, codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja, subTotal){
+        this.id          = id;
         this.codigoPizza = codigoPizza;
         this.nombrePizza = nombrePizza,
         this.tamano      = tamano;
@@ -36,6 +32,43 @@ class Item{
         this.subTotal    = subTotal;
     }
 }
+
+const compra ={
+    extraCaja: 250,      // Costo extra para cajas Pizza Art
+    porcentajePromo: 7,  // Porcentaje de Descuento
+    montoPromo: 15000,   // Monto mínimo para promoción
+
+    subtotal:  0,
+    descuento: 0,
+    total:     0,
+
+    limpiar(){
+        this.subtotal  = 0;
+        this.descuento = 0;
+        this.total     = 0;
+    },
+
+    actualizarTotales({subTotal}){
+        this.subtotal = this.subtotal + subTotal;
+        this.calcularDescuento();
+    },
+
+    restarValor({subTotal}){
+        this.subtotal = this.subtotal - subTotal;
+        this.calcularDescuento();
+    },
+
+    calcularDescuento(){
+        if(parseFloat(this.subtotal) >= this.montoPromo){
+            this.descuento = parseFloat(( this.porcentajePromo * this.subtotal ) /100).toFixed(2);
+            this.total = this.subtotal - this.descuento;
+        }else{
+            this.descuento = 0;
+            this.total     = this.subtotal;
+        }
+    },
+
+};
 
 const nuevasCajas    = []; // Array con los nuevos diseños (Novedades)
 const cajas          = []; // Array con todos los nuevos diseños
@@ -187,10 +220,17 @@ const getPizza =(codigo)=>{
 }
 
 //******************************************************************//
-// Retorna un caja según el código enviado:
+// Retorna una caja según el código enviado:
 //******************************************************************//
 const getCaja =(codigo)=>{
     return (cajas.find((el)=> el.codigo == parseInt(codigo)));
+}
+
+//******************************************************************//
+// Retorna un item del Carrito según el ID enviado:
+//******************************************************************//
+const getItemCarrito =(id, items)=>{
+    return (items.find((el)=> el.id == id));
 }
 
 //******************************************************************//
@@ -200,6 +240,31 @@ const actualizarTotalModal =( { precioPizza, precioCaja } )=>{
     const subTotal = precioPizza + precioCaja;
     document.querySelector("#p-total").innerHTML = `total: $${subTotal}`;
 };
+
+//******************************************************************//
+// Genera de forma dinámica un mensaje Toast en un contenedor
+// con clase "mensaje-toast" y lo muestra en pantalla
+//******************************************************************//
+const generarMostrarToast=(tituloMensaje, subTituloMensaje, mensaje)=>{
+
+    document.querySelector(".mensaje-toast").innerHTML = `
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">${tituloMensaje}</strong>
+                <small>${subTituloMensaje}</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">${mensaje}</div>
+        </div>
+    </div>
+    `;
+
+    // Visualiza el Mensaje Toast por pantalla:
+    const toastLiveExample = document.getElementById('liveToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
+}
 
 //******************************************************************//
 // Muestra el detalle previo a agregar al Carrito
@@ -297,11 +362,13 @@ const agregarItemCarrito=(item)=>{
     const items = getCarritoStorage();
 
     // Actualiza valores antes de agregar al Carrito:
+    item.id         = "id-carrito-" + (items.length + 1);
     item.subTotal   = item.precioPizza + item.precioCaja;
     const { descrip } = getCaja(item.codigoCaja);
     item.nombreCaja = descrip;
 
     items.push(new Item(
+        item.id,
         item.codigoPizza,
         item.nombrePizza,
         item.tamano,
@@ -315,6 +382,8 @@ const agregarItemCarrito=(item)=>{
     // Actualiza Carrito en Local Storage
     guardarCarritoStorage(items);
 
+    // Mensaje informando que se agregó el elemento al Carrito:
+    generarMostrarToast("Carrito", "Pizza Art", "Item agregado.");
 }
 
 //******************************************************************//
@@ -324,17 +393,16 @@ const rutinasHome=()=>{
 
     const idTag = "pag-home";
     if (existeID(idTag) != false){
-        vaciarCarrito(); // TEMPORAL
         cargaInicial();
         nuevasCajas.forEach((nuevaCaja)=>{
             agregarCardsNuevas(nuevaCaja);
         });
 
         // Establece el monto a superar para adquirir la promoción
-        document.querySelector("#monto-promo").innerHTML = montoPromo;
+        document.querySelector("#monto-promo").innerHTML = compra.montoPromo;
 
         // Establece el porcentaje para descuento en la promoción
-        document.querySelector("#porcen-promo").innerHTML = porcentajePromo;
+        document.querySelector("#porcen-promo").innerHTML = compra.porcentajePromo;
     }
 }
 
@@ -351,7 +419,7 @@ const rutinasProductos=()=>{
         });
     
         // Establece el valor para el costo extra de Cajas Pizza Art:
-        document.querySelector("#extra-caja").innerHTML = extraCaja;
+        document.querySelector("#extra-caja").innerHTML = compra.extraCaja;
     }
 }
 
@@ -391,7 +459,7 @@ const rutinasModal=()=>{
                 item.codigoCaja = 0;
                 actualizarTotalModal(item);
             }else{
-                item.precioCaja = extraCaja;
+                item.precioCaja = compra.extraCaja;
                 item.codigoCaja = parseInt(e.target.value);
                 actualizarTotalModal(item);
             }
@@ -461,12 +529,13 @@ const agregarCardCarrito=(item)=>{
 
     const cardCarrito = document.createElement("div");
     cardCarrito.className = "container-fluid card-item";
+    cardCarrito.id        = "card-" + item.id; //ID Card Carrito
     cardCarrito.innerHTML = `
                             <div class="nes-container is-centered pizza-carrito">${item.nombrePizza}</div>
                             <div class="nes-container is-centered descrip-carrito">${item.tamano}</div>
                             <div class="nes-container is-centered descrip-carrito">Caja: ${item.nombreCaja}</div>
                             <div class="nes-container is-centered subtotal-carrito">total $${item.subTotal}</div>
-                            <button class="nes-btn is-error btn-eliminar-item">eliminar</button>
+                            <button class="nes-btn is-error btn-eliminar-item" id="${item.id}">eliminar</button>
                             `;
     document.querySelector("#carrito").append(cardCarrito);
 }
@@ -474,22 +543,33 @@ const agregarCardCarrito=(item)=>{
 //******************************************************************//
 // Elimina Item seleccionado del Carrito
 //******************************************************************//
-const eliminaItemCarrito=(index)=>{
+const eliminaItemCarrito=(idCard)=>{
 
     // Recupera Carrito del Storage
     const items = getCarritoStorage();
 
-    if (items.length > index ){
-        items.splice(index, 1);
-        const cardsItem = document.querySelectorAll(".card-item");
-        if (cardsItem != null){
-            cardsItem[index].remove();
-            guardarCarritoStorage(items);
+    if (items.length > 0 ){
 
-            const toastLiveExample = document.getElementById('liveToast')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show()
+        const index = items.findIndex((item)=>item.id==idCard);
+        if (index >= 0){
 
+            // Recupera Item para luego descontarlo del Total del Carrito
+            item = getItemCarrito(idCard, items);
+            items.splice(index, 1);
+
+            //Id de Card Carrito
+            const cardItem = document.querySelector("#" + "card-" + idCard );
+            if (cardItem != null){
+                cardItem.remove();
+                guardarCarritoStorage(items);
+
+                // Mensaje informando que se eliminó el elemento:
+                generarMostrarToast("Carrito", "Pizza Art", "Item eliminado.");
+
+                // Actualiza Tabla de Totales:
+                compra.restarValor(item);
+                actualizaTablaCarrito();
+            }
         }
     }
 
@@ -499,11 +579,32 @@ const eliminaItemCarrito=(index)=>{
 // Eventos CARRITO
 //******************************************************************//
 const crearEventosCarrito=()=>{
-    document.querySelectorAll(".btn-eliminar-item").forEach((btn, index)=>{
-        btn.addEventListener("click", ()=>{
-            eliminaItemCarrito(index);
+    document.querySelectorAll(".btn-eliminar-item").forEach((btn)=>{
+        btn.addEventListener("click", (e)=>{
+            eliminaItemCarrito(e.target.id);
         });
     });
+
+    // Limpiar el Carrito
+    document.querySelector("#btn-limpiar-carrito").addEventListener("click",()=>{
+        // Elimina Card de Item
+        document.querySelectorAll(".card-item").forEach((card)=>{
+            card.remove();
+        });
+        vaciarCarrito();
+        compra.limpiar();
+        actualizaTablaCarrito();
+    });
+
+}
+
+//******************************************************************//
+// Actualiza Tabla Totales Carrito
+//******************************************************************//
+const actualizaTablaCarrito=()=>{
+    document.querySelector("#carrito-subtotal").innerHTML  = "$" + parseFloat(compra.subtotal).toFixed(2);
+    document.querySelector("#carrito-descuento").innerHTML = "$" + parseFloat(compra.descuento).toFixed(2);
+    document.querySelector("#carrito-total").innerHTML     = "$" + parseFloat(compra.total).toFixed(2);
 }
 
 //******************************************************************//
@@ -516,15 +617,22 @@ const rutinasCarrito=()=>{
 
         const items = getCarritoStorage();
         if(items.length > 0){
+
+            // Limpia Totales del Carrito
+            compra.limpiar()
+
             // Agregar Cards del Carrito
             items.forEach((item)=>{
                 agregarCardCarrito(item);
+                compra.actualizarTotales(item);
             });
 
             // Agregar Listener para los Botones ELIMINAR de las Card
             // del Carrito
             crearEventosCarrito();
 
+            // Actualiza Tabla de Totales:
+            actualizaTablaCarrito();
         }
     }
 }

@@ -224,8 +224,8 @@ main {
       padding-bottom: 5px;
       padding-top: 10px;
       width: 225px;
-      border-top: solid black;
-      border-bottom: solid black; }
+      border-top: solid black 3px;
+      border-bottom: solid black 3px; }
     #carrito .card-item .nes-btn {
       margin: 15px;
       max-width: 180px; }
@@ -239,4 +239,20 @@ main {
   .carrito-tabla-totales td {
     border-right: solid 4px black;
     font-size: 15px;
-    padding: 5px 7px; }
+    padding: 5px 7px;
+    text-align: right; }
+  .carrito-tabla-totales .td-total {
+    background-color: #363333;
+    color: white; }
+
+.botones-carrito {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px; }
+  .botones-carrito button {
+    height: 80px;
+    width: 180px;
+    margin-bottom: 15px; }
