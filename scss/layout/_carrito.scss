@@ -49,3 +49,19 @@
     }
 
 }
+
+.carrito-tabla-totales{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    table{
+        background-color: white
+    }
+
+    td{
+        border-right: solid 4px black;
+        font-size: 15px;
+        padding: 5px 7px;
+    }
+}

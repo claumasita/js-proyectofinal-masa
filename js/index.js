@@ -312,7 +312,7 @@ const agregarItemCarrito=(item)=>{
         item.subTotal
         ));
 
-    // Almacena Carrito con items, en Local Storage
+    // Actualiza Carrito en Local Storage
     guardarCarritoStorage(items);
 
 }
@@ -466,9 +466,44 @@ const agregarCardCarrito=(item)=>{
                             <div class="nes-container is-centered descrip-carrito">${item.tamano}</div>
                             <div class="nes-container is-centered descrip-carrito">Caja: ${item.nombreCaja}</div>
                             <div class="nes-container is-centered subtotal-carrito">total $${item.subTotal}</div>
-                            <button class="nes-btn is-error">eliminar</button>
+                            <button class="nes-btn is-error btn-eliminar-item">eliminar</button>
                             `;
     document.querySelector("#carrito").append(cardCarrito);
+}
+
+//******************************************************************//
+// Elimina Item seleccionado del Carrito
+//******************************************************************//
+const eliminaItemCarrito=(index)=>{
+
+    // Recupera Carrito del Storage
+    const items = getCarritoStorage();
+
+    if (items.length > index ){
+        items.splice(index, 1);
+        const cardsItem = document.querySelectorAll(".card-item");
+        if (cardsItem != null){
+            cardsItem[index].remove();
+            guardarCarritoStorage(items);
+
+            const toastLiveExample = document.getElementById('liveToast')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+
+        }
+    }
+
+}
+
+//******************************************************************//
+// Eventos CARRITO
+//******************************************************************//
+const crearEventosCarrito=()=>{
+    document.querySelectorAll(".btn-eliminar-item").forEach((btn, index)=>{
+        btn.addEventListener("click", ()=>{
+            eliminaItemCarrito(index);
+        });
+    });
 }
 
 //******************************************************************//
@@ -488,6 +523,7 @@ const rutinasCarrito=()=>{
 
             // Agregar Listener para los Botones ELIMINAR de las Card
             // del Carrito
+            crearEventosCarrito();
 
         }
     }
