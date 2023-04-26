@@ -541,6 +541,15 @@ const agregarCardCarrito=(item)=>{
 }
 
 //******************************************************************//
+// Elimina todas las Cards del Carrito
+//******************************************************************//
+const eliminarTodasCardsCarrito=()=>{
+    document.querySelectorAll(".card-item").forEach((card)=>{
+        card.remove();
+    });
+}
+
+//******************************************************************//
 // Elimina Item seleccionado del Carrito
 //******************************************************************//
 const eliminaItemCarrito=(idCard)=>{
@@ -587,13 +596,23 @@ const crearEventosCarrito=()=>{
 
     // Limpiar el Carrito
     document.querySelector("#btn-limpiar-carrito").addEventListener("click",()=>{
-        // Elimina Card de Item
-        document.querySelectorAll(".card-item").forEach((card)=>{
-            card.remove();
-        });
+        // Elimina TODAS Cards de Item
+        eliminarTodasCardsCarrito();
         vaciarCarrito();
         compra.limpiar();
         actualizaTablaCarrito();
+    });
+
+    // Confirma la compra
+    document.querySelector("#btn-confirmar-compra").addEventListener("click",()=>{
+
+        // Muestra temporalmente un mensaje indicando que la compra fue confirmada.
+        document.getElementById('dialog-default').showModal();
+        eliminarTodasCardsCarrito();
+        vaciarCarrito();
+        compra.limpiar();
+        actualizaTablaCarrito();
+
     });
 
 }
