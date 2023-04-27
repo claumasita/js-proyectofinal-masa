@@ -123,10 +123,6 @@ main{
     padding: 5px;
     max-width: 1300px;
     width: 95%;
-    // -webkit-animation-name: animarsuperior;
-    // -webkit-animation-duration: 0.5s;
-    // animation-name: animarsuperior;
-    // animation-duration: 0.5s;
 
     .titulo-agregar{
         background-color: black;
@@ -172,14 +168,3 @@ main{
     }
 
 }
-
-// // ANIMACION
-// @-webkit-keyframes animatetop {
-//     from {top:-300px; opacity:0} 
-//     to {top:0; opacity:1}
-// }
-
-// @keyframes animarsuperior {
-//     from {top:-300px; opacity:0}
-//     to {top:0; opacity:1}
-// }

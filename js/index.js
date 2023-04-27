@@ -541,6 +541,18 @@ const agregarCardCarrito=(item)=>{
 }
 
 //******************************************************************//
+// Agregar texto CARRITO VACIO
+//******************************************************************//
+const agregarTextoCarritoVacio=()=>{
+    document.querySelector("#carrito").innerHTML =  `
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <p class="text-center fs-4">El carrito está vacío</p>
+                                                        <img class = "img-fluid img-carrito-vacio" src="../img/caja-vacia.png" alt="..." >
+                                                    </div>
+                                                    `
+}
+
+//******************************************************************//
 // Elimina todas las Cards del Carrito
 //******************************************************************//
 const eliminarTodasCardsCarrito=()=>{
@@ -624,6 +636,9 @@ const actualizaTablaCarrito=()=>{
     document.querySelector("#carrito-subtotal").innerHTML  = "$" + parseFloat(compra.subtotal).toFixed(2);
     document.querySelector("#carrito-descuento").innerHTML = "$" + parseFloat(compra.descuento).toFixed(2);
     document.querySelector("#carrito-total").innerHTML     = "$" + parseFloat(compra.total).toFixed(2);
+    if(compra.total == 0){
+        agregarTextoCarritoVacio();
+    }
 }
 
 //******************************************************************//
@@ -652,6 +667,8 @@ const rutinasCarrito=()=>{
 
             // Actualiza Tabla de Totales:
             actualizaTablaCarrito();
+        }else{
+            agregarTextoCarritoVacio()
         }
     }
 }

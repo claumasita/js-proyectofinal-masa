@@ -1,0 +1,9 @@
+/* SETEOS GENERALES */
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a, button{
+    @include btn-cursor;
+}

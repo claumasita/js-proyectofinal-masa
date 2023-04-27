@@ -7,6 +7,7 @@
 /* MENU CENTRADO */
 .navbar-toggler {
     border: none;
+    @include btn-cursor;
 }
 
 .carrito {
