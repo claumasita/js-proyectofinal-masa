@@ -247,6 +247,7 @@ const actualizarTotalModal =( { precioPizza, precioCaja } )=>{
 //******************************************************************//
 const generarMostrarToast=(tituloMensaje, subTituloMensaje, mensaje)=>{
 
+    //document.querySelector(".contenedor-principal").innerHTML = `
     document.querySelector(".mensaje-toast").innerHTML = `
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -597,6 +598,50 @@ const eliminaItemCarrito=(idCard)=>{
 }
 
 //******************************************************************//
+// Actualiza Tabla Totales Carrito
+//******************************************************************//
+const actualizaTablaCarrito=()=>{
+    document.querySelector("#carrito-subtotal").innerHTML  = "$" + parseFloat(compra.subtotal).toFixed(2);
+    document.querySelector("#carrito-descuento").innerHTML = "$" + parseFloat(compra.descuento).toFixed(2);
+    document.querySelector("#carrito-total").innerHTML     = "$" + parseFloat(compra.total).toFixed(2);
+    if(compra.total == 0){
+        agregarTextoCarritoVacio();
+    }
+}
+
+//******************************************************************//
+// Confirma Vaciar Carrito
+//******************************************************************//
+const confirmarVaciarCarrito=()=>{
+    Swal.fire({
+        title:"Carrito",
+        text:"Confirma que desea eliminar todos los items?",
+        icon:"question",
+        showConfirmButton: true,
+        showCancelButton:  true,
+        confirmButtonText: "Confirmar",
+        confirmButtonColor: "Red",
+        cancelButtonText:  "Cancelar",
+        cancelButtonColor: "Gray",
+        allowOutsideClick: false,
+        allowEnterKey: false,
+        focusCancel: true,
+        position: 'center',
+    
+    }).then((resultado)=>{
+        if(resultado.isConfirmed){
+            eliminarTodasCardsCarrito();
+            vaciarCarrito();
+            compra.limpiar();
+            actualizaTablaCarrito();
+        }
+        if(resultado.isDismissed){
+            generarMostrarToast("Carrito", "Pizza Art", "Acción cancelada.")
+        }
+    });
+}
+
+//******************************************************************//
 // Eventos CARRITO
 //******************************************************************//
 const crearEventosCarrito=()=>{
@@ -609,10 +654,7 @@ const crearEventosCarrito=()=>{
     // Limpiar el Carrito
     document.querySelector("#btn-limpiar-carrito").addEventListener("click",()=>{
         // Elimina TODAS Cards de Item
-        eliminarTodasCardsCarrito();
-        vaciarCarrito();
-        compra.limpiar();
-        actualizaTablaCarrito();
+        confirmarVaciarCarrito();
     });
 
     // Confirma la compra
@@ -627,18 +669,6 @@ const crearEventosCarrito=()=>{
 
     });
 
-}
-
-//******************************************************************//
-// Actualiza Tabla Totales Carrito
-//******************************************************************//
-const actualizaTablaCarrito=()=>{
-    document.querySelector("#carrito-subtotal").innerHTML  = "$" + parseFloat(compra.subtotal).toFixed(2);
-    document.querySelector("#carrito-descuento").innerHTML = "$" + parseFloat(compra.descuento).toFixed(2);
-    document.querySelector("#carrito-total").innerHTML     = "$" + parseFloat(compra.total).toFixed(2);
-    if(compra.total == 0){
-        agregarTextoCarritoVacio();
-    }
 }
 
 //******************************************************************//
@@ -683,3 +713,52 @@ rutinasHome();
 rutinasProductos();
 rutinasMenu();
 rutinasCarrito();
+
+
+// Swal.fire({
+//     title:"Carrito",
+//     text:"Confirma que desea eliminar todos los items?",
+//     icon:"swal2-icon-hide",
+//     showConfirmButton: true,
+//     showCancelButton:  true,
+//     confirmButtonText: "Confirmar",
+//     confirmButtonColor: "Red",
+//     cancelButtonText:  "Cancelar",
+//     cancelButtonColor: "Gray",
+//     allowOutsideClick: false,
+//     allowEnterKey: false,
+//     focusCancel: true,
+//     // timer:5000,
+//     // imageUrl: 'https://unsplash.it/400/200',
+//     //imageWidth: 400,
+//     //imageHeight: 200,
+//     //imageAlt: 'Custom image',
+//     // width: 500,
+//     // color:"#fff",
+//     // background:"#000",
+//     // backdrop:"rgba(0,0,0,0.9)",
+//     position: 'center',
+
+// }).then((resultado)=>{
+//    if(resultado.isConfirmed){
+//     Swal.fire({
+//         title:"confirmo"
+//     })
+// }
+//    if(resultado.isDismissed){
+//     Swal.fire({
+//         title:"no confirmo"
+//     })
+//    }
+// });
+
+// const { value: email } = await Swal.fire({
+//     title: 'Input email address',
+//     input: 'email',
+//     inputLabel: 'Your email address',
+//     inputPlaceholder: 'Enter your email address'
+//   })
+  
+//   if (email) {
+//     Swal.fire(`Entered email: ${email}`)
+//   }
