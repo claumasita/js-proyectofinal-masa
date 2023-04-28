@@ -20,7 +20,7 @@ class Pizza{
 
 // Clase para Items del Carrito
 class Item{
-    constructor(id, codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja, subTotal){
+    constructor(id, codigoPizza, nombrePizza, tamano, precioPizza, codigoCaja, nombreCaja, precioCaja, subTotal, cantidad){
         this.id          = id;
         this.codigoPizza = codigoPizza;
         this.nombrePizza = nombrePizza,
@@ -30,6 +30,7 @@ class Item{
         this.nombreCaja  = nombreCaja;
         this.precioCaja  = precioCaja;
         this.subTotal    = subTotal;
+        this.cantidad    = cantidad;
     }
 }
 
@@ -247,7 +248,6 @@ const actualizarTotalModal =( { precioPizza, precioCaja } )=>{
 //******************************************************************//
 const generarMostrarToast=(tituloMensaje, subTituloMensaje, mensaje)=>{
 
-    //document.querySelector(".contenedor-principal").innerHTML = `
     document.querySelector(".mensaje-toast").innerHTML = `
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -281,6 +281,7 @@ const mostrarDetallesPizza=(codigo)=>{
     item.tamano      = "Grande";
     item.precioCaja  = 0;
     item.codigoCaja  = 0;
+    item.cantidad    = 1;
 
     // Muestra el nombre de la Pizza Seleccionada
     const contenedorNombrePizza = document.querySelector(".p-pizza");
@@ -377,7 +378,8 @@ const agregarItemCarrito=(item)=>{
         item.codigoCaja,
         item.nombreCaja,
         item.precioCaja,
-        item.subTotal
+        item.subTotal,
+        item.cantidad
         ));
 
     // Actualiza Carrito en Local Storage
@@ -530,12 +532,21 @@ const agregarCardCarrito=(item)=>{
 
     const cardCarrito = document.createElement("div");
     cardCarrito.className = "container-fluid card-item";
-    cardCarrito.id        = "card-" + item.id; //ID Card Carrito
+    const btnResta = "resta_"+ item.id; //ID Boton Carrito -
+    const btnSuma  = "suma_" + item.id; //ID Boton Carrito +
+    const lblCant  = "cant_" + item.id; //ID Cantidad Carrito
+    const lblTotal = "total_"+ item.id; //ID Total Item
+    cardCarrito.id = "card-" + item.id; //ID Card Carrito
     cardCarrito.innerHTML = `
                             <div class="nes-container is-centered pizza-carrito">${item.nombrePizza}</div>
                             <div class="nes-container is-centered descrip-carrito">${item.tamano}</div>
                             <div class="nes-container is-centered descrip-carrito">Caja: ${item.nombreCaja}</div>
-                            <div class="nes-container is-centered subtotal-carrito">total $${item.subTotal}</div>
+                            <div class="nes-container is-centered subtotal-carrito" id="${lblTotal}">total $${item.subTotal}</div>
+                            <div class="nes-container is-centered descrip-carrito">
+                                <button class ="nes-btn btn-cant" id = "${btnResta}">-</button>
+                                    <div class = "d-flex justify-content-center align-items-center cantidad-carrito" id="${lblCant}">${item.cantidad}</div>
+                                <button class ="nes-btn btn-cant" id = "${btnSuma}">+</button>
+                            </div>
                             <button class="nes-btn is-error btn-eliminar-item" id="${item.id}">eliminar</button>
                             `;
     document.querySelector("#carrito").append(cardCarrito);
@@ -610,13 +621,35 @@ const actualizaTablaCarrito=()=>{
 }
 
 //******************************************************************//
+// Confirma Compra
+//******************************************************************//
+const confirmarCompra=async ()=>{
+    const { value: email } = await Swal.fire({
+        title: 'Confirmar Compra',
+        input: 'email',
+        inputLabel: 'Ingrese su correo',
+        inputPlaceholder: 'Enter your email address',
+        showCancelButton:  true,
+        allowOutsideClick: false,
+        allowEnterKey: false,
+        })
+
+    if (email) {
+        eliminarTodasCardsCarrito();
+        vaciarCarrito();
+        compra.limpiar();
+        actualizaTablaCarrito();
+        Swal.fire("Su compra ha sido confirmada. Muchas gracias!")
+    }
+}
+
+//******************************************************************//
 // Confirma Vaciar Carrito
 //******************************************************************//
 const confirmarVaciarCarrito=()=>{
     Swal.fire({
         title:"Carrito",
         text:"Confirma que desea eliminar todos los items?",
-        icon:"question",
         showConfirmButton: true,
         showCancelButton:  true,
         confirmButtonText: "Confirmar",
@@ -634,6 +667,7 @@ const confirmarVaciarCarrito=()=>{
             vaciarCarrito();
             compra.limpiar();
             actualizaTablaCarrito();
+            generarMostrarToast("Carrito", "Pizza Art", "Items eliminados.")
         }
         if(resultado.isDismissed){
             generarMostrarToast("Carrito", "Pizza Art", "Acción cancelada.")
@@ -642,33 +676,84 @@ const confirmarVaciarCarrito=()=>{
 }
 
 //******************************************************************//
+// Sumar ; Restar Cantidad Item Carrito
+//******************************************************************//
+const cantidadItemCarrito=(id)=>{
+    const ids        = id.split("_");
+    const idCarrito  = ids[1];
+    const idCant     = "#cant_" + idCarrito;
+    const idSubTotal = "#total_" + idCarrito;
+    const lblCant      = document.querySelector(idCant);
+    const lblSubTotal  = document.querySelector(idSubTotal);
+    let cantidad = parseInt(lblCant.innerHTML);
+
+    const items = getCarritoStorage();
+    item = getItemCarrito(idCarrito, items);
+
+    if(ids[0]=="suma"){
+        if (cantidad <= 9){
+            cantidad++;
+        }
+    }else{
+        if (cantidad > 1){
+            cantidad--;
+        }
+    }
+    // Actualiza Valores en pantalla
+    compra.restarValor(item);
+    item.cantidad = cantidad;
+    item.subTotal = item.cantidad * (item.precioCaja + item.precioPizza);
+    lblCant.innerHTML     = cantidad;
+    lblSubTotal.innerHTML = `\ total $${item.subTotal}`;
+    compra.actualizarTotales(item);
+    actualizaTablaCarrito();
+
+    // Actualiza Array Carrito
+    const index = items.findIndex((item)=>item.id==idCarrito);
+    if (index >= 0){
+        items.splice(index, 1, item);
+        guardarCarritoStorage(items);
+    }
+}
+
+//******************************************************************//
 // Eventos CARRITO
 //******************************************************************//
 const crearEventosCarrito=()=>{
+    
+    // Boton eliminar item
     document.querySelectorAll(".btn-eliminar-item").forEach((btn)=>{
         btn.addEventListener("click", (e)=>{
             eliminaItemCarrito(e.target.id);
         });
     });
 
-    // Limpiar el Carrito
+    // Boton Sumar Cantidad
+    document.querySelectorAll(".btn-cant").forEach((btn)=>{
+        btn.addEventListener("click", (e)=>{
+            cantidadItemCarrito(e.target.id);
+        });
+    });
+
+    // Boton Limpiar el Carrito
     document.querySelector("#btn-limpiar-carrito").addEventListener("click",()=>{
         // Elimina TODAS Cards de Item
-        confirmarVaciarCarrito();
+        if(compra.total != 0){
+            confirmarVaciarCarrito();
+        }else{
+            generarMostrarToast("Carrito","Pizza Art","El carrito está vacío.")
+        }
     });
 
-    // Confirma la compra
+    // Boton Confirma la compra
     document.querySelector("#btn-confirmar-compra").addEventListener("click",()=>{
-
-        // Muestra temporalmente un mensaje indicando que la compra fue confirmada.
-        document.getElementById('dialog-default').showModal();
-        eliminarTodasCardsCarrito();
-        vaciarCarrito();
-        compra.limpiar();
-        actualizaTablaCarrito();
-
+        if(compra.total != 0){
+            confirmarCompra();
+        }else{
+            generarMostrarToast("Carrito","Pizza Art","El carrito está vacío.")
+        }
+        
     });
-
 }
 
 //******************************************************************//
@@ -690,16 +775,14 @@ const rutinasCarrito=()=>{
                 agregarCardCarrito(item);
                 compra.actualizarTotales(item);
             });
-
-            // Agregar Listener para los Botones ELIMINAR de las Card
-            // del Carrito
-            crearEventosCarrito();
-
             // Actualiza Tabla de Totales:
             actualizaTablaCarrito();
         }else{
             agregarTextoCarritoVacio()
         }
+        // Agregar Listener para los Botones ELIMINAR de las Card
+        // del Carrito
+        crearEventosCarrito();
     }
 }
 
