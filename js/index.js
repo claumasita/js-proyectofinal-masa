@@ -635,11 +635,22 @@ const confirmarCompra=async ()=>{
         })
 
     if (email) {
-        eliminarTodasCardsCarrito();
-        vaciarCarrito();
-        compra.limpiar();
-        actualizaTablaCarrito();
-        Swal.fire("Su compra ha sido confirmada. Muchas gracias!")
+        Swal.fire({
+            title: "Carrito",
+            text: "Aguarde uno instantes mientras se confirma la operación.",
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            willClose: () => {
+                eliminarTodasCardsCarrito();
+                vaciarCarrito();
+                compra.limpiar();
+                actualizaTablaCarrito();
+                Swal.fire("Su compra ha sido confirmada. Muchas gracias!")
+            }
+        });
     }
 }
 
