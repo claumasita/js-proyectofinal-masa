@@ -1,0 +1,18 @@
+[
+    {   "codigo": "1", 
+        "descrip":"Caja Copa del Mundo",
+        "imagen":"caja-copa.png"
+    },
+    {   "codigo": "2",
+        "descrip":"Caja Dibu Final",
+        "imagen":"caja-dibu.png"
+    },
+    {   "codigo": "3",
+        "descrip":"Caja Messi",
+        "imagen":"caja-messi-01.png"
+    },
+    {   "codigo": "4",
+        "descrip":"Caja Messi Campeon",
+        "imagen":"caja-messi-02.png"
+    }
+]

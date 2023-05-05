@@ -71,7 +71,7 @@ const compra ={
 
 };
 
-const nuevasCajas    = []; // Array con los nuevos diseños (Novedades)
+// const nuevasCajas    = []; // Array con los nuevos diseños (Novedades)
 const cajas          = []; // Array con todos los nuevos diseños
 const pizzas         = []; // Array con las pizzas
 const divNuevas      = document.querySelector("#nuevas");
@@ -110,11 +110,24 @@ const agregarPizza =(codigo, nombre, precioCh, precioGr, tipo)=>{
 //******************************************************************//
 // Agrega los objetos de los nuevos diseños al Array correspondiente
 //******************************************************************//
-const cargaInicial=()=>{
-    agregarNuevaCaja(1, "Caja Copa del Mundo", "caja-copa.png");
-    agregarNuevaCaja(2, "Caja Dibu Final", "caja-dibu.png");
-    agregarNuevaCaja(3, "Caja Messi", "caja-messi-01.png");
-    agregarNuevaCaja(4, "Caja Messi Campeon", "caja-messi-02.png");
+// const cargaInicial=()=>{
+//     agregarNuevaCaja(1, "Caja Copa del Mundo", "caja-copa.png");
+//     agregarNuevaCaja(2, "Caja Dibu Final", "caja-dibu.png");
+//     agregarNuevaCaja(3, "Caja Messi", "caja-messi-01.png");
+//     agregarNuevaCaja(4, "Caja Messi Campeon", "caja-messi-02.png");
+// }
+
+const cargarNovedades = async () =>{
+    try {
+        const resp = await fetch("./json/novedades.json");
+        const nuevas = await resp.json();
+        nuevas.forEach((nuevaCaja)=>{
+            agregarCardsNuevas(nuevaCaja);
+        });
+        
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //******************************************************************//
@@ -347,7 +360,6 @@ const guardarCarritoStorage=(items)=>{
 const getCarritoStorage=()=>{
 
     const carrito = JSON.parse(getJsonStorage("carrito"));
-    // carrito == null ? return [] : return carrito;
     if (carrito != null){
         return carrito;
     }else{
@@ -396,10 +408,10 @@ const rutinasHome=()=>{
 
     const idTag = "pag-home";
     if (existeID(idTag) != false){
-        cargaInicial();
-        nuevasCajas.forEach((nuevaCaja)=>{
-            agregarCardsNuevas(nuevaCaja);
-        });
+        // cargaInicial();
+        // nuevasCajas.forEach((nuevaCaja)=>{
+        //     agregarCardsNuevas(nuevaCaja);
+        // });
 
         // Establece el monto a superar para adquirir la promoción
         document.querySelector("#monto-promo").innerHTML = compra.montoPromo;
@@ -804,55 +816,7 @@ const rutinasCarrito=()=>{
 
 // Procesos para Cada Página
 rutinasHome();
+cargarNovedades();
 rutinasProductos();
 rutinasMenu();
 rutinasCarrito();
-
-
-// Swal.fire({
-//     title:"Carrito",
-//     text:"Confirma que desea eliminar todos los items?",
-//     icon:"swal2-icon-hide",
-//     showConfirmButton: true,
-//     showCancelButton:  true,
-//     confirmButtonText: "Confirmar",
-//     confirmButtonColor: "Red",
-//     cancelButtonText:  "Cancelar",
-//     cancelButtonColor: "Gray",
-//     allowOutsideClick: false,
-//     allowEnterKey: false,
-//     focusCancel: true,
-//     // timer:5000,
-//     // imageUrl: 'https://unsplash.it/400/200',
-//     //imageWidth: 400,
-//     //imageHeight: 200,
-//     //imageAlt: 'Custom image',
-//     // width: 500,
-//     // color:"#fff",
-//     // background:"#000",
-//     // backdrop:"rgba(0,0,0,0.9)",
-//     position: 'center',
-
-// }).then((resultado)=>{
-//    if(resultado.isConfirmed){
-//     Swal.fire({
-//         title:"confirmo"
-//     })
-// }
-//    if(resultado.isDismissed){
-//     Swal.fire({
-//         title:"no confirmo"
-//     })
-//    }
-// });
-
-// const { value: email } = await Swal.fire({
-//     title: 'Input email address',
-//     input: 'email',
-//     inputLabel: 'Your email address',
-//     inputPlaceholder: 'Enter your email address'
-//   })
-  
-//   if (email) {
-//     Swal.fire(`Entered email: ${email}`)
-//   }
