@@ -1,0 +1,80 @@
+[
+    {   "codigo"  : 1, 
+        "nombre"  :"muzzarella",
+        "precioCh":2500,
+        "precioGr":2900,
+        "tipo"    :"c"
+    },
+    {   "codigo"  : 2,
+        "nombre"  :"jamon y morrones",
+        "precioCh":2900,
+        "precioGr":3800,
+        "tipo"    :"c"
+    },
+    {   "codigo"  : 3, 
+        "nombre"  :"napolitana",
+        "precioCh":3400,
+        "precioGr":4200,
+        "tipo"    :"c"
+    },
+    {   "codigo"  : 4, 
+        "nombre"  :"fugazzeta con jamon",
+        "precioCh":4300,
+        "precioGr":5000,
+        "tipo"    :"c"
+    },
+    {   "codigo"  : 5, 
+        "nombre"  :"palmitos",
+        "precioCh":3600,
+        "precioGr":4300,
+        "tipo"    :"s"
+    },
+    {   "codigo"  : 6, 
+        "nombre"  :"calabresa",
+        "precioCh":3800,
+        "precioGr":4600,
+        "tipo"    :"s"
+    },
+    {   "codigo"  : 7, 
+        "nombre"  :"cuatro quesos",
+        "precioCh":3800,
+        "precioGr":4600,
+        "tipo"    :"s"
+    },
+    {   "codigo"  : 8, 
+        "nombre"  :"provolone",
+        "precioCh":3700,
+        "precioGr":4500,
+        "tipo"    :"s"
+    },
+    {   "codigo"  : 9, 
+        "nombre"  :"donkey kong (con banana)",
+        "precioCh":3800,
+        "precioGr":4600,
+        "tipo"    :"x"
+    },
+    {   "codigo"  : 10, 
+        "nombre"  :"tetris (cuadrada)",
+        "precioCh":2600,
+        "precioGr":3000,
+        "tipo"    :"x"
+    },
+    {   "codigo"  : 11, 
+        "nombre"  :"sonic (aros de cebolla)",
+        "precioCh":3600,
+        "precioGr":4300,
+        "tipo"    :"x"
+    },
+    {   "codigo"  : 12, 
+        "nombre"  :"bomberman (picante)",
+        "precioCh":3700,
+        "precioGr":4500,
+        "tipo"    :"x"
+    },
+    {   "codigo"  : 13, 
+        "nombre"  :"super mario (champignones)",
+        "precioCh":3900,
+        "precioGr":4800,
+        "tipo"    :"x"
+    }
+]

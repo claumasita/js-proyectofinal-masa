@@ -1,0 +1,74 @@
+[
+    {   "codigo": 0, 
+        "descrip":"Standard",
+        "imagen":"caja-standard.png"
+    },
+    {   "codigo": 1,
+        "descrip":"Copa del Mundo",
+        "imagen":"caja-copa.png",
+        "novedad": true
+    },
+    {   "codigo": 2,
+        "descrip":"Dibu Final",
+        "imagen":"caja-dibu.png",
+        "novedad": true
+    },
+    {   "codigo": 3,
+        "descrip":"Messi",
+        "imagen":"caja-messi-01.png",
+        "novedad": true
+    },
+    {   "codigo": 4,
+        "descrip":"Messi Campeon",
+        "imagen":"caja-messi-02.png",
+        "novedad": true
+    },
+    {   "codigo": 5,
+        "descrip":"Bomberman",
+        "imagen":"caja-bomberman.png"
+    },
+    {   "codigo": 6,
+        "descrip":"Bowser",
+        "imagen":"caja-bowser.png"
+    },
+    {   "codigo": 7,
+        "descrip":"GhostBusters",
+        "imagen":"caja-busters.png"
+    },
+    {   "codigo": 8,
+        "descrip":"Ghost",
+        "imagen":"caja-ghost.png"
+    },
+    {   "codigo": 9,
+        "descrip":"Donkey Kong",
+        "imagen":"caja-kong.png"
+    },
+    {   "codigo": 10,
+        "descrip":"Link",
+        "imagen":"caja-link.png"
+    },
+    {   "codigo": 11,
+        "descrip":"Super Mario",
+        "imagen":"caja-mario.png"
+    },
+    {   "codigo": 12,
+        "descrip":"Peach",
+        "imagen":"caja-peach.png"
+    },
+    {   "codigo": 13,
+        "descrip":"Perro",
+        "imagen":"caja-perro.png"
+    },
+    {   "codigo": 14,
+        "descrip":"Sonic",
+        "imagen":"caja-sonic.png"
+    },
+    {   "codigo": 15,
+        "descrip":"Spider-man",
+        "imagen":"caja-spiderman.png"
+    },
+    {   "codigo": 16,
+        "descrip":"Castlevania",
+        "imagen":"caja-simon.png"
+    }
+]

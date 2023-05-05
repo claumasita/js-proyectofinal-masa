@@ -1,9 +1,10 @@
 // Clase para los nuevos diseños disponibles
 class Caja{
-    constructor(codigo, descrip, imagen){
+    constructor(codigo, descrip, imagen, novedad){
         this.codigo   = codigo;
         this.descrip  = descrip;
-        this.imagen   = imagen
+        this.imagen   = imagen;
+        this.novedad  = novedad
     }
 }
 
@@ -71,9 +72,6 @@ const compra ={
 
 };
 
-// const nuevasCajas    = []; // Array con los nuevos diseños (Novedades)
-const cajas          = []; // Array con todos los nuevos diseños
-const pizzas         = []; // Array con las pizzas
 const divNuevas      = document.querySelector("#nuevas");
 const divProductos   = document.querySelector("#productos");
 const divClasicas    = document.querySelector("#clasicas");
@@ -87,94 +85,40 @@ let item             = new Item();
 //////////////////////////////////////////////////////////////
 
 //******************************************************************//
-// Función para cargar los items existentes al inicializar el programa
-//******************************************************************//
-const agregarNuevaCaja =(codigo, descrip, imagen)=>{
-    nuevasCajas.push(new Caja(parseInt(codigo), descrip, imagen));
-}
-
-//******************************************************************//
-// Cajas
-//******************************************************************//
-const agregarCaja =(codigo, descrip, imagen)=>{
-    cajas.push(new Caja(parseInt(codigo), descrip, imagen));
-}
-
-//******************************************************************//
-// Pizzas
-//******************************************************************//
-const agregarPizza =(codigo, nombre, precioCh, precioGr, tipo)=>{
-    pizzas.push(new Pizza(parseInt(codigo), nombre, parseFloat(precioCh), parseFloat(precioGr), tipo));
-}
-
-//******************************************************************//
 // Agrega los objetos de los nuevos diseños al Array correspondiente
 //******************************************************************//
-// const cargaInicial=()=>{
-//     agregarNuevaCaja(1, "Caja Copa del Mundo", "caja-copa.png");
-//     agregarNuevaCaja(2, "Caja Dibu Final", "caja-dibu.png");
-//     agregarNuevaCaja(3, "Caja Messi", "caja-messi-01.png");
-//     agregarNuevaCaja(4, "Caja Messi Campeon", "caja-messi-02.png");
-// }
+const mostrarNuevas = () =>{
+    const cajas = getSessionStorageToArray("productos");
+    const nuevas = cajas.filter((el) => el.novedad);
+    nuevas.forEach((caja)=>{
+        agregarCardsNuevas(caja);
+    });
+}
 
-const cargarNovedades = async () =>{
+//******************************************************************//
+// Agrega los objetos de todos los diseños al Array correspondiente
+//******************************************************************//
+const cargarDisenos = async () =>{
     try {
-        const resp = await fetch("./json/novedades.json");
-        const nuevas = await resp.json();
-        nuevas.forEach((nuevaCaja)=>{
-            agregarCardsNuevas(nuevaCaja);
-        });
-        
+        const resp      = await fetch("../json/productos.json");
+        const productos = await resp.json();
+        guardarProductosStorage(JSON.stringify(productos));
     } catch (error) {
         console.log(error);
     }
 }
 
 //******************************************************************//
-// Agrega los objetos de todos los diseños al Array correspondiente
-//******************************************************************//
-const cargaProductos=()=>{
-    agregarCaja(0,  "Standard"      , "caja-standard.png");
-    agregarCaja(1,  "Copa del Mundo", "caja-copa.png");
-    agregarCaja(2,  "Dibu Final"    , "caja-dibu.png");
-    agregarCaja(3,  "Messi"         , "caja-messi-01.png");
-    agregarCaja(4,  "Messi Campeon" , "caja-messi-02.png");
-    agregarCaja(5,  "Bomberman"     , "caja-bomberman.png");
-    agregarCaja(6,  "Bowser"        , "caja-bowser.png");
-    agregarCaja(7,  "GhostBusters"  , "caja-busters.png");
-    agregarCaja(8,  "Ghost"         , "caja-ghost.png");
-    agregarCaja(9,  "Donkey Kong"   , "caja-kong.png");
-    agregarCaja(10, "Link"          , "caja-link.png");
-    agregarCaja(11, "Super Mario"   , "caja-mario.png");
-    agregarCaja(12, "Peach"         , "caja-peach.png");
-    agregarCaja(13, "Perro"         , "caja-perro.png");
-    agregarCaja(14, "Sonic"         , "caja-sonic.png");
-    agregarCaja(15, "Spider-man"    , "caja-spiderman.png");
-    agregarCaja(16, "Castlevania"   , "caja-simon.png");
-}
-
-//******************************************************************//
 // Agrega los objetos de las pizzas al Array correspondiente
 //******************************************************************//
-const cargaPizzas=()=>{
-    // Clasicas (c)
-    agregarPizza(1,  "muzzarella"                 , "2500" , "2900" , "c");
-    agregarPizza(2,  "jamon y morrones"           , "2900" , "3800" , "c");
-    agregarPizza(3,  "napolitana"                 , "3400" , "4200" , "c");
-    agregarPizza(4,  "fugazzeta con jamon"        , "4300" , "5000" , "c");
-
-    // Especiales (s)
-    agregarPizza(5,  "palmitos"                   , "3600" , "4300" , "s");
-    agregarPizza(6,  "calabresa"                  , "3800" , "4600" , "s");
-    agregarPizza(7,  "cuatro quesos"              , "3800" , "4600" , "s");
-    agregarPizza(8,  "provolone"                  , "3700" , "4500" , "s");
-
-    // Exclusivas (x)
-    agregarPizza(9,  "donkey kong (con banana)"   , "3800" , "4600" , "x");
-    agregarPizza(10, "tetris (cuadrada)"          , "2600" , "3000" , "x");
-    agregarPizza(11, "sonic (aros de cebolla)"    , "3600" , "4300" , "x");
-    agregarPizza(12, "bomberman"                  , "3700" , "4500" , "x");
-    agregarPizza(13, "super mario (champignones)" , "3900" , "4800" , "x");
+const cargarPizzas = async () =>{
+    try {
+        const resp   = await fetch("../json/pizzas.json");
+        const pizzas = await resp.json();
+        guardarPizzasStorage(JSON.stringify(pizzas));
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //******************************************************************//
@@ -230,6 +174,7 @@ const existeID=(idDiv)=>{
 // Seleccionar elemento para el carrito:
 //******************************************************************//
 const getPizza =(codigo)=>{
+    const pizzas = getSessionStorageToArray("pizzas");
     return (pizzas.find((el)=> el.codigo == parseInt(codigo)));
 }
 
@@ -237,6 +182,7 @@ const getPizza =(codigo)=>{
 // Retorna una caja según el código enviado:
 //******************************************************************//
 const getCaja =(codigo)=>{
+    const cajas = getSessionStorageToArray("productos");
     return (cajas.find((el)=> el.codigo == parseInt(codigo)));
 }
 
@@ -319,21 +265,34 @@ const mostrarDetallesPizza=(codigo)=>{
 const llenarListaCajas=()=>{
     const selectCaja = document.querySelector("#select-caja");
     selectCaja.innerHTML = "";
+    const cajas = getSessionStorageToArray("productos");
     cajas.forEach((caja)=>{
         selectCaja.innerHTML = selectCaja.innerHTML + "\n<option value='" + caja.codigo + "'>" + caja.descrip + "</option>";
     });
 }
 
 //******************************************************************//
-// Elimina todos los elementos del Carrito
+// Elimina todos los elementos del Local Storage Indicado
 //******************************************************************//
-const vaciarCarrito=()=>{localStorage.removeItem("carrito");}
+const vaciarLocalStorage=(clave)=>{localStorage.removeItem(clave);}
+
+//******************************************************************//
+// Elimina todos los elementos del Sesion Storage Indicado
+//******************************************************************//
+const vaciarSessionStorage=(clave)=>{sessionStorage.removeItem(clave);}
 
 //******************************************************************//
 // Recupera JSON desde LocalStorage
 //******************************************************************//
 const getJsonStorage=(clave)=>{
     return localStorage.getItem(clave);
+};
+
+//******************************************************************//
+// Recupera JSON desde SessionStorage
+//******************************************************************//
+const getJsonSessionStorage=(clave)=>{
+    return sessionStorage.getItem(clave);
 };
 
 //******************************************************************//
@@ -344,12 +303,19 @@ const agregarJsonStorage=(clave, json)=>{
 };
 
 //******************************************************************//
+// Recibe JSON para almacenar en el SessionStorage
+//******************************************************************//
+const agregarJsonSessionStorage=(clave, json)=>{
+    sessionStorage.setItem(clave, json);
+};
+
+//******************************************************************//
 // Convierte Carrito a JSON y lo almacena en el LocalStorage
 //******************************************************************//
 const guardarCarritoStorage=(items)=>{
 
     const enJSON = JSON.stringify(items);
-    vaciarCarrito();
+    vaciarLocalStorage("carrito");
     agregarJsonStorage("carrito", enJSON);
 
 };
@@ -362,6 +328,19 @@ const getCarritoStorage=()=>{
     const carrito = JSON.parse(getJsonStorage("carrito"));
     if (carrito != null){
         return carrito;
+    }else{
+        return [];
+    }
+};
+
+//******************************************************************//
+// Convierte JSON (desde SessionStorage) a Array de Objetos
+//******************************************************************//
+const getSessionStorageToArray=(clave)=>{
+
+    const coleccion = JSON.parse(getJsonSessionStorage(clave));
+    if (coleccion != null){
+        return coleccion;
     }else{
         return [];
     }
@@ -402,16 +381,29 @@ const agregarItemCarrito=(item)=>{
 }
 
 //******************************************************************//
+// JSON de Productos => almacenar en el SessionStorage
+//******************************************************************//
+const guardarProductosStorage=(enJson)=>{
+    vaciarSessionStorage("productos");
+    agregarJsonSessionStorage("productos", enJson);
+};
+
+//******************************************************************//
+// JSON de Pizzas => almacenar en el SessionStorage
+//******************************************************************//
+const guardarPizzasStorage=(enJson)=>{
+    vaciarSessionStorage("pizzas");
+    agregarJsonSessionStorage("pizzas", enJson);
+};
+
+//******************************************************************//
 // Rutinas para pagina INDEX
 //******************************************************************//
 const rutinasHome=()=>{
 
     const idTag = "pag-home";
     if (existeID(idTag) != false){
-        // cargaInicial();
-        // nuevasCajas.forEach((nuevaCaja)=>{
-        //     agregarCardsNuevas(nuevaCaja);
-        // });
+        mostrarNuevas();
 
         // Establece el monto a superar para adquirir la promoción
         document.querySelector("#monto-promo").innerHTML = compra.montoPromo;
@@ -428,7 +420,8 @@ const rutinasProductos=()=>{
 
     const idTag = "pag-productos";
     if (existeID(idTag) != false){
-        cargaProductos();
+
+        const cajas = getSessionStorageToArray("productos");
         cajas.forEach((caja)=>{
             agregarCardsProductos(caja);
         });
@@ -442,7 +435,6 @@ const rutinasProductos=()=>{
 // Rutinas para Ventana Modal
 //******************************************************************//
 const rutinasModal=()=>{
-    cargaProductos();
     llenarListaCajas();
 
     // Listener para RadioButton de Tamaño
@@ -503,7 +495,7 @@ const rutinasMenu=()=>{
     if (existeID(idTag) != false){
 
         // MENÚ: Clásicas
-        cargaPizzas();
+        const pizzas = getSessionStorageToArray("pizzas");
         const pizzasC = pizzas.filter((pz)=> pz.tipo == "c" );
         pizzasC.forEach((pizza)=>{
             agregarCardsPizzas(pizza, divClasicas);
@@ -657,7 +649,7 @@ const confirmarCompra=async ()=>{
             allowEscapeKey: false,
             willClose: () => {
                 eliminarTodasCardsCarrito();
-                vaciarCarrito();
+                vaciarLocalStorage("carrito");
                 compra.limpiar();
                 actualizaTablaCarrito();
                 Swal.fire("Su compra ha sido confirmada. Muchas gracias!")
@@ -687,7 +679,7 @@ const confirmarVaciarCarrito=()=>{
     }).then((resultado)=>{
         if(resultado.isConfirmed){
             eliminarTodasCardsCarrito();
-            vaciarCarrito();
+            vaciarLocalStorage("carrito");
             compra.limpiar();
             actualizaTablaCarrito();
             generarMostrarToast("Carrito", "Pizza Art", "Items eliminados.")
@@ -810,13 +802,22 @@ const rutinasCarrito=()=>{
 }
 
 //******************************************************************//
+// Función Principal
+//******************************************************************//
+const inicio = async () =>{
+    // Carga de Productos
+    await cargarDisenos();
+    await cargarPizzas();
+    
+    // Procesos para Cada Página
+    rutinasHome();
+    rutinasProductos();
+    rutinasMenu();
+    rutinasCarrito();
+}
+
+//******************************************************************//
 //                      INICIO DEL PROGRAMA                         //
 //******************************************************************//
 //******************************************************************//
-
-// Procesos para Cada Página
-rutinasHome();
-cargarNovedades();
-rutinasProductos();
-rutinasMenu();
-rutinasCarrito();
+inicio();
