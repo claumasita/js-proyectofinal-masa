@@ -99,8 +99,17 @@ const mostrarNuevas = () =>{
 // Agrega los objetos de todos los diseños al Array correspondiente
 //******************************************************************//
 const cargarDisenos = async () =>{
+    
+    const objetos = getSessionStorageToArray("pizzas");
+    if ( objetos.length > 0 ){return};
+
+    let rutaJson = "../json/productos.json";
+    if (existeID("pag-home") != false){
+        rutaJson = "./json/productos.json";
+    }
+
     try {
-        const resp      = await fetch("../json/productos.json");
+        const resp      = await fetch(rutaJson);
         const productos = await resp.json();
         guardarProductosStorage(JSON.stringify(productos));
     } catch (error) {
@@ -112,6 +121,15 @@ const cargarDisenos = async () =>{
 // Agrega los objetos de las pizzas al Array correspondiente
 //******************************************************************//
 const cargarPizzas = async () =>{
+
+    const objetos = getSessionStorageToArray("pizzas");
+    if ( objetos.length > 0 ){return};
+
+    let rutaJson = "../json/pizzas.json";
+    if (existeID("pag-home") != false){
+        rutaJson = "./json/pizzas.json";
+    }
+
     try {
         const resp   = await fetch("../json/pizzas.json");
         const pizzas = await resp.json();
