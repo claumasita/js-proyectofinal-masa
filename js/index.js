@@ -77,7 +77,7 @@ const divProductos   = document.querySelector("#productos");
 const divClasicas    = document.querySelector("#clasicas");
 const divEspeciales  = document.querySelector("#especiales");
 const divExclusivas  = document.querySelector("#exclusivas");
-let pizzaSelec;            // Pizza Seleccionada para agregar
+let pizzaSelec;      // Pizza Seleccionada para agregar
 let item             = new Item();
 
 //////////////////////////////////////////////////////////////
@@ -378,18 +378,35 @@ const agregarItemCarrito=(item)=>{
     const { descrip } = getCaja(item.codigoCaja);
     item.nombreCaja = descrip;
 
-    items.push(new Item(
-        item.id,
-        item.codigoPizza,
-        item.nombrePizza,
-        item.tamano,
-        item.precioPizza,
-        item.codigoCaja,
-        item.nombreCaja,
-        item.precioCaja,
-        item.subTotal,
-        item.cantidad
-        ));
+    // Verifica si ya existe un item existente:
+    const existeItem = items.find((it) =>   it.codigoPizza === item.codigoPizza &&
+                                            it.tamano      === item.tamano &&
+                                            it.codigoCaja  === item.codigoCaja) || false;
+    if (existeItem != false){
+        // Recupera Item para luego actualizar la cantidad
+        const index = items.findIndex((el)=>el.id==existeItem.id);
+        if (items[index].cantidad>=10){
+            Swal.fire('Ha alcanzado el máximo de items(10) para este elemento.');
+            return;
+        }else{
+            items[index].cantidad++; 
+            items[index].subTotal = items[index].cantidad * (items[index].precioCaja + item.precioPizza);
+        }
+    }else{
+
+        items.push(new Item(
+            item.id,
+            item.codigoPizza,
+            item.nombrePizza,
+            item.tamano,
+            item.precioPizza,
+            item.codigoCaja,
+            item.nombreCaja,
+            item.precioCaja,
+            item.subTotal,
+            item.cantidad
+            ));
+    }
 
     // Actualiza Carrito en Local Storage
     guardarCarritoStorage(items);
