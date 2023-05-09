@@ -12,6 +12,10 @@ a:hover, button:hover {
 .swal2-input {
   font-size: 18px !important; }
 
+.nes-container {
+  padding-left: 15px !important;
+  padding-right: 15px !important; }
+
 body {
   width: 100%;
   margin: 0 auto;
@@ -281,3 +285,10 @@ main {
     height: 80px;
     width: 180px;
     margin-bottom: 15px; }
+
+#nosotros .img-nosotros, #nosotros .img-logo, #nosotros .img-caja-pizza {
+  margin: 0 auto;
+  max-width: 250px;
+  object-position: center;
+  padding-top: 20px;
+  padding-bottom: 30px; }
