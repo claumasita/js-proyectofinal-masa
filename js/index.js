@@ -331,11 +331,9 @@ const agregarJsonSessionStorage=(clave, json)=>{
 // Convierte Carrito a JSON y lo almacena en el LocalStorage
 //******************************************************************//
 const guardarCarritoStorage=(items)=>{
-
     const enJSON = JSON.stringify(items);
     vaciarLocalStorage("carrito");
     agregarJsonStorage("carrito", enJSON);
-
 };
 
 //******************************************************************//
@@ -578,7 +576,7 @@ const agregarCardCarrito=(item)=>{
     cardCarrito.id = "card-" + item.id; //ID Card Carrito
     cardCarrito.innerHTML = `
                             <div class="nes-container is-centered pizza-carrito">${item.nombrePizza}</div>
-                            <div class="nes-container is-centered descrip-carrito">${item.tamano}</div>
+                            <div class="nes-container is-centered descrip-carrito">- ${item.tamano} -</div>
                             <div class="nes-container is-centered descrip-carrito">Caja: ${item.nombreCaja}</div>
                             <div class="nes-container is-centered subtotal-carrito" id="${lblTotal}">total $${item.subTotal}</div>
                             <div class="nes-container is-centered descrip-carrito">
@@ -667,10 +665,11 @@ const confirmarCompra=async ()=>{
         title: 'Confirmar Compra',
         input: 'email',
         inputLabel: 'Ingrese su correo',
-        inputPlaceholder: 'Enter your email address',
+        inputPlaceholder: 'e-mail',
         showCancelButton:  true,
         allowOutsideClick: false,
         allowEnterKey: false,
+        validationMessage: 'correo no válido',
         })
 
     if (email) {
@@ -683,6 +682,7 @@ const confirmarCompra=async ()=>{
             allowOutsideClick: false,
             allowEscapeKey: false,
             willClose: () => {
+                clearInterval();
                 eliminarTodasCardsCarrito();
                 vaciarLocalStorage("carrito");
                 compra.limpiar();

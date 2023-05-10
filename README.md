@@ -1,3 +1,25 @@
+# Coderhouse - Curso JS - Entrega Final
+> Para visualizar los detalles de las Pre-Entregas anteriores debe desplazarse hacia abajo.
+
+------------
+## Bienvenidos a Pizza Art!
+![](https://claumasita.github.io/js-preentrega3-masa/img/pizza-cool-ch.png)
+### Una forma divertida de comer pizza
+- Hay varios motivos para que elijas la caja de la pizza que más te guste
+- Se agregan las pizzas a elección al Carrito de Compras, al cual podes acceder desde la parte superior de la pantalla.
+- Una vez en el Carrito, se pueden eliminar items, limpiar todo el Carrito o confirmar la compra.
+- Dependiendo de las operaciones de agregar o quitar artículos del Carrito, se actualiza el monto a pagar y calcula el descuento (si corrresponde).
+
+### Detalles corregidos en base a la devolución recibida de la última pre-entrega:
+- Se corrigieron los errores en el carrito de compras.
+- Se agregaron notificaciones en pantalla que hicieron que sea más amigable para el usuario.
+- Se implementó el uso de SessionStorage para la lista de articulos disponibles.
+- Se utiliza FECTH para cargar archivos JSON locales, generando de esta forma funciones asincrónicas.
+- Se agregó la librería SweetAlert para facilitar la creación de mensajes.
+- Al momento de confirmar la compra, se solicita al usuario un mail simulando el proceso final.
+
+------------
+
 # Pre-Entrega N°3
 > Para visualizar los detalles de las Pre-Entregas anteriores debe desplazarse hacia abajo.
 
